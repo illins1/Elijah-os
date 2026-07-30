@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mile High AI — What You Get</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A;
+    --ink2:#132A4D;
+    --amber:#F2A93B;
+    --paper:#F7F5F0;
+    --slate:#8B98AC;
+    --good:#34D399;
+    --bad:#EF4444;
+    --line:rgba(247,245,240,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+  .frame{
+    width:100%;
+    max-width:390px;
+    min-height:100vh;
+    position:relative;
+    background:
+      radial-gradient(120% 60% at 50% 0%, rgba(242,169,59,0.10), transparent 60%),
+      var(--ink);
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+  }
+  /* ---------- HERO ---------- */
+  .hero{ padding:28px 22px 20px; }
+  .brandrow{
+    display:flex; align-items:center; gap:8px; margin-bottom:22px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);}
+  .brand{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--slate);}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:29px;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin-top:10px;
+  }
+  h1 em{ font-style:italic; color:var(--amber); font-weight:400; }
+  .sub{
+    color:var(--slate);
+    font-size:14.5px;
+    line-height:1.55;
+    margin-top:12px;
+    max-width:34ch;
+  }
+
+  /* ---------- TRUST DIAL ---------- */
+  .dial-wrap{
+    margin:26px 0 6px;
+    background:var(--ink2);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px 20px 20px;
+  }
+  .dial-label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:14px;
+  }
+  .dial-title{font-size:13px; color:var(--slate);}
+  .dial-live{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--bad);
+    display:flex; align-items:center; gap:5px;
+  }
+  .dial-live::before{content:'●'; font-size:8px;}
+  .dial-row{ display:flex; align-items:center; gap:18px; }
+  .dial-num{
+    font-family:'Fraunces',serif; font-weight:700; font-size:52px;
+    color:var(--bad); line-height:1;
+  }
+  .dial-num span{font-size:20px; color:var(--slate); font-family:'IBM Plex Mono',monospace; font-weight:500;}
+  .dial-bar{ flex:1; }
+  .bar-track{ height:8px; background:rgba(255,255,255,0.08); border-radius:5px; overflow:hidden; margin-bottom:8px;}
+  .bar-fill{ height:100%; width:34%; background:linear-gradient(90deg,var(--bad),var(--amber)); border-radius:5px; }
+  .dial-note{ font-size:12px; color:var(--slate); line-height:1.5; }
+  .engines{
+    display:flex; gap:7px; margin-top:16px; flex-wrap:wrap;
+  }
+  .engine-pill{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; padding:5px 9px;
+    border:1px solid var(--line); border-radius:20px; color:var(--slate);
+  }
+  .engine-pill.miss{ color:var(--bad); border-color:rgba(239,68,68,0.35); }
+
+  /* ---------- FREE PAGE STRIP ---------- */
+  .free-strip{
+    margin:22px 0; padding:18px 20px;
+    background:rgba(52,211,153,0.08);
+    border:1px solid rgba(52,211,153,0.28);
+    border-radius:16px;
+  }
+  .free-strip .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.08em;
+    color:var(--good); text-transform:uppercase; margin-bottom:8px; display:block;
+  }
+  .free-strip p{ font-size:14px; line-height:1.55; color:var(--paper); }
+  .free-strip p b{ color:var(--good); font-weight:600; }
+  .free-strip .host{
+    margin-top:12px; font-size:12px; color:var(--slate);
+    display:flex; align-items:center; gap:6px;
+  }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-head{ padding:34px 22px 6px; }
+  .section-head h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:22px;
+  }
+  .section-head p{
+    color:var(--slate); font-size:13.5px; margin-top:8px; line-height:1.55;
+  }
+
+  /* ---------- STACK ---------- */
+  .stack{ padding:14px 22px 8px; display:flex; flex-direction:column; }
+  .step{
+    display:flex; gap:14px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .step:first-child{ padding-top:8px; }
+  .step-num{
+    font-family:'Fraunces',serif; font-weight:600; font-size:20px;
+    color:var(--amber); min-width:28px; opacity:0.9;
+  }
+  .step-body h3{
+    font-size:15px; font-weight:600; margin-bottom:4px; letter-spacing:-0.01em;
+  }
+  .step-body p{ font-size:13px; color:var(--slate); line-height:1.5; }
+  .step-body .badge{
+    display:inline-block; margin-top:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.06em;
+    color:var(--ink); background:var(--amber); padding:3px 8px; border-radius:20px;
+  }
+  .thread{
+    position:absolute; left:13px; top:44px; bottom:-1px; width:1px;
+    background:var(--line);
+  }
+  .step:last-child .thread{ display:none; }
+
+  /* ---------- VOICE WIDGET MOCK ---------- */
+  .voice-note{
+    margin:26px 22px; padding:16px 18px;
+    border:1px dashed var(--line); border-radius:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .voice-icon{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--amber); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .voice-note p{ font-size:12.5px; color:var(--slate); line-height:1.5; }
+  .voice-note b{ color:var(--paper); }
+
+  /* ---------- CLOSER ---------- */
+  .closer{
+    margin:8px 22px 40px; padding:24px 20px;
+    background:var(--paper); color:var(--ink);
+    border-radius:20px;
+  }
+  .closer .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.1em;
+    text-transform:uppercase; color:#8A6B2E; margin-bottom:10px; display:block;
+  }
+  .closer p{
+    font-family:'Fraunces',serif; font-size:17px; line-height:1.4; font-weight:500;
+  }
+  .closer .price{
+    margin-top:16px; padding-top:16px; border-top:1px solid rgba(11,31,58,0.14);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .closer .price b{ font-size:19px; font-family:'IBM Plex Mono',monospace; }
+  .closer .price span{ font-size:11px; color:#5A6478; display:block; margin-top:2px; }
+  .cta{
+    display:block; text-align:center; margin-top:16px;
+    background:var(--ink); color:var(--paper);
+    padding:14px; border-radius:12px; font-weight:600; font-size:14px;
+    letter-spacing:0.01em;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <div class="hero">
+    <div class="brandrow">
+      <div class="dot"></div>
+      <div class="brand">MILE HIGH AI</div>
+    </div>
+    <h1>Here's what AI<br>says about <em>you</em>&nbsp;—<br>right now.</h1>
+    <p class="sub">Before we talk about anything else, look at this. This is your business through the eyes of the tools your customers already use to search.</p>
+  </div>
+
+  <div style="padding:0 22px;">
+    <div class="dial-wrap">
+      <div class="dial-label">
+        <span class="dial-title">AI Trust Score</span>
+        <span class="dial-live">LIVE PULL</span>
+      </div>
+      <div class="dial-row">
+        <div class="dial-num">34<span>/100</span></div>
+        <div class="dial-bar">
+          <div class="bar-track"><div class="bar-fill"></div></div>
+          <div class="dial-note">Below where local competitors rank on AI-driven search.</div>
+        </div>
+      </div>
+      <div class="engines">
+        <span class="engine-pill miss">Google Ask Maps — miss</span>
+        <span class="engine-pill miss">ChatGPT — miss</span>
+        <span class="engine-pill">Perplexity — partial</span>
+        <span class="engine-pill miss">Gemini — miss</span>
+        <span class="engine-pill">Bing Copilot — partial</span>
+        <span class="engine-pill miss">Apple Intelligence — miss</span>
+      </div>
+    </div>
+
+    <div class="free-strip">
+      <span class="tag">This page — free, no catch</span>
+      <p><b>This exact landing page is yours.</b> Take the code, put it on your own hosting, your own domain. No login, no lock-in. I built it to show you what's possible — not to trap you into anything.</p>
+      <div class="host">↳ deploys anywhere · yours to keep either way</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>What's running behind it</h2>
+    <p>The free page is the door. Everything below is the engine — built once, then it runs every day without you touching it.</p>
+  </div>
+
+  <div class="stack">
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>AI Trust Audit — 6 engines</h3>
+        <p>How your business actually shows up across Google Ask Maps, ChatGPT, Gemini, Perplexity, Copilot, and Apple Intelligence.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Map Pack Gap Analysis</h3>
+        <p>Exactly why competitors outrank you in the local 3-pack, and what's fixable this week.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Citation Gap List</h3>
+        <p>Every directory and data source where your business is missing, wrong, or inconsistent — found and fixed.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>GBP Content Calendar</h3>
+        <p>Google Business Profile posts planned and scheduled, so the profile stays active without you writing a word.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <h3>Missed Call AI Agent</h3>
+        <p>Every call you can't pick up gets answered, texted back, and booked — 24/7.</p>
+        <span class="badge">MOST REQUESTED</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <h3>SEO Agent</h3>
+        <p>Ongoing on-page and local SEO work that keeps your visibility score moving up, not just fixed once.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">07</div>
+      <div class="step-body">
+        <h3>Social Agent</h3>
+        <p>Posts drafted and scheduled from your own jobs and photos — consistent presence with zero extra hours from you.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">08</div>
+      <div class="step-body">
+        <h3>Review Agent</h3>
+        <p>Requests reviews at the right moment after a job closes, and flags anything negative before it goes public.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">09</div>
+      <div class="step-body">
+        <h3>Google Ask Maps Visibility</h3>
+        <p>Positioning specifically for Gemini-powered local AI search — the newest channel, and the one almost no local competitor has touched yet.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="thread"></div>
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <h3>Onboarding + Ongoing Management</h3>
+        <p>Everything set up, connected, and watched monthly — no dashboards to learn, no contracts to sign.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="voice-note">
+    <div class="voice-icon">◈</div>
+    <p><b>Talk to it live —</b> the widget on your actual demo page lets a customer speak a question and get answered on the spot. It's on the page, not in this explainer.</p>
+  </div>
+
+  <div class="closer">
+    <span class="tag">The line</span>
+    <p>"The site is yours free either way. The Full Build at $497 plus $297 a month is what puts the engine behind it."</p>
+    <div class="price">
+      <div>
+        <b>$497 <span style="font-size:12px;font-weight:500;">setup</span></b>
+        <span>+ $297/mo · no contract</span>
+      </div>
+    </div>
+    <a href="#" class="cta">Unlock the full stack →</a>
+  </div>
+
+</div>
+</body>
+</html>
