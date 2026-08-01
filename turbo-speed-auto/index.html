@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Turbo Speed Auto Sales | Buy · Sell · Trade — Englewood, CO</title>
+<style>
+  :root {
+    --bg: #101318; --panel: #171B22; --border: #262C36;
+    --text: #F2F1EC; --muted: #8D93A0;
+    --red: #C8262C; --blue: #2E4C9E; --blue-light: #6F8CDB;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, 'Inter', system-ui, sans-serif; }
+  .wrap { max-width: 480px; margin: 0 auto; }
+  header {
+    padding: 36px 22px 26px; text-align:center;
+    background: linear-gradient(180deg, #1A2030 0%, #101318 100%);
+    border-bottom: 3px solid var(--red);
+  }
+  .badge {
+    display:inline-flex; align-items:center; gap:6px; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color: var(--blue-light); font-weight:800; margin-bottom:12px;
+  }
+  h1 { font-size: 30px; font-weight: 900; letter-spacing:-0.02em; }
+  h1 span { color: var(--red); }
+  .tagline { color: var(--muted); font-size: 14px; margin-top: 8px; letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+  .cta-row { padding: 22px 22px 6px; display:flex; gap:10px; }
+  .btn { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px;
+    border-radius:10px; font-weight:800; font-size:14.5px; text-decoration:none; border:none; }
+  .btn-primary { background: var(--red); color: #fff; }
+  .btn-secondary { background: var(--blue); color:#fff; }
+  section { padding: 26px 22px 8px; }
+  .section-label { font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:700; margin-bottom:12px; }
+  .hours-card { background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; }
+  .hours-card .label { font-size:13px; color: var(--muted); }
+  .hours-card .value { font-size:14px; font-weight:700; }
+  .audit-card {
+    background: var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px;
+    margin: 24px 22px 28px;
+  }
+  .audit-card h3 { font-size:17px; margin-bottom:8px; }
+  .audit-card p { font-size:13.5px; color: var(--muted); line-height:1.55; margin-bottom:14px; }
+  .stat-row { display:flex; gap:14px; margin-top: 6px; }
+  .stat { flex:1; text-align:center; background: rgba(0,0,0,.25); border-radius:10px; padding:12px 6px; }
+  .stat-num { font-size:20px; font-weight:800; color: var(--blue-light); }
+  .stat-label { font-size:10.5px; color: var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.05em; }
+  footer { padding: 22px; border-top:1px solid var(--border); text-align:center; color: var(--muted); font-size:12px; }
+  footer a { color: var(--blue-light); text-decoration:none; }
+
+  .included-grid { display:flex; flex-direction:column; gap:10px; }
+  .included-item { display:flex; align-items:flex-start; gap:12px; background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:14px; }
+  .included-icon { font-size:20px; flex-shrink:0; width:30px; text-align:center; }
+  .included-title { font-size:14px; font-weight:700; margin-bottom:2px; }
+  .included-sub { font-size:12px; color: var(--muted); line-height:1.4; }
+
+  .feature-list { display:flex; flex-direction:column; gap:10px; }
+  .feature-item { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color: var(--text); line-height:1.4; background: var(--panel); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+  .feature-dot { flex-shrink:0; width:7px; height:7px; border-radius:50%; background: var(--blue-light); margin-top:5px; box-shadow:0 0 6px var(--blue-light); }
+  .reviews-card { background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .reviews-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .stars { color:#F0B429; font-size:16px; letter-spacing:1px; }
+  .reviews-count { font-size:12.5px; color: var(--muted); font-weight:600; }
+  .reviews-note { font-size:13px; color: var(--muted); line-height:1.5; }
+
+  .voice-fab {
+    position: fixed; bottom: 20px; right: 20px; width: 58px; height: 58px; border-radius: 50%;
+    background: var(--red); border: none; display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 4px 20px rgba(200,38,44,0.5); cursor:pointer; z-index: 50;
+    animation: fabPulse 2.4s infinite;
+  }
+  @keyframes fabPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(200,38,44,.5);} 50%{ box-shadow:0 0 0 12px rgba(200,38,44,0);} }
+  .voice-fab svg { width:26px; height:26px; }
+  .voice-panel {
+    position: fixed; bottom: 0; left:0; right:0; max-width:480px; margin:0 auto;
+    background: var(--panel); border-top:1px solid var(--border); border-radius: 18px 18px 0 0;
+    padding: 18px; transform: translateY(110%); transition: transform .3s ease; z-index: 60;
+    max-height: 70vh; overflow-y: auto;
+  }
+  .voice-panel.open { transform: translateY(0); }
+  .voice-panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .voice-panel-head .vtitle { font-weight:700; font-size:14px; }
+  .voice-panel-head .vsub { font-size:11px; color: var(--blue-light); }
+  .voice-close { background:none; border:none; color: var(--muted); font-size:20px; cursor:pointer; }
+  .chat-bubble { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: 13.5px; line-height:1.4; margin-bottom:10px; }
+  .chat-bubble.caller { background: var(--border); margin-left:auto; border-bottom-right-radius:4px; }
+  .chat-bubble.ai { background: var(--blue); color:#fff; margin-right:auto; border-bottom-left-radius:4px; }
+  .voice-overlay { position:fixed; inset:0; background: rgba(0,0,0,.5); z-index:55; display:none; }
+  .voice-overlay.open { display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">Englewood, CO · Service Center On-Site</div>
+    <h1>Turbo<span>Speed</span> Auto Sales</h1>
+    <div class="tagline">Buy · Sell · Trade</div>
+  </header>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="tel:3036680444">Call — 303-668-0444</a>
+    <a class="btn btn-secondary" href="tel:7202202576">Call — 720-220-2576</a>
+  </div>
+
+  <section>
+    <div class="section-label">Service Center Hours</div>
+    <div class="hours-card">
+      <span class="label">Monday – Saturday</span>
+      <span class="value">9:00 AM – 6:00 PM</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Everything included with Mile High AI</div>
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-icon">📍</div>
+        <div><div class="included-title">Google Maps &amp; Map Pack</div><div class="included-sub">Show up in the top 3 local map results, not buried on page 2</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">⭐</div>
+        <div><div class="included-title">Yelp &amp; Google Reviews</div><div class="included-sub">Synced and pulled into AI answers automatically</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">☎</div>
+        <div><div class="included-title">24/7 Call Answering</div><div class="included-sub">The voice assistant below — live on your site, every call</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📱</div>
+        <div><div class="included-title">Social Media Posting</div><div class="included-sub">Regular posts keeping your business active and visible</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📈</div>
+        <div><div class="included-title">Monthly AI Visibility Tracking</div><div class="included-sub">See exactly where you rank across AI engines, every month</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Never miss a buyer's call</div>
+    <div class="feature-list">
+      <div class="feature-item"><span class="feature-dot"></span>Every call answered instantly — nights, weekends, mid-test-drive</div>
+      <div class="feature-item"><span class="feature-dot"></span>AI knows your inventory and answers like your front desk would</div>
+      <div class="feature-item"><span class="feature-dot"></span>Every lead stays in your pipeline until you follow up personally</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Shows up where reviews matter</div>
+    <div class="reviews-card">
+      <div class="reviews-row">
+        <span class="stars">★★★★★</span>
+        <span class="reviews-count">Google &amp; Yelp reviews synced</span>
+      </div>
+      <p class="reviews-note">AI assistants read your reviews before recommending you. We make sure yours are visible where it counts — not just on your page, but inside the AI answer itself.</p>
+    </div>
+  </section>
+
+  <div class="audit-card">
+    <h3>Your Free AI Visibility Audit</h3>
+    <p>When a shopper types "buy sell trade used cars near me" or asks an AI assistant where to get a fair trade-in quote in Englewood — is Turbo Speed showing up first, or is a bigger dealership eating that lead?</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">AI engines checked</div></div>
+      <div class="stat"><div class="stat-num">3/6</div><div class="stat-label">show your listing</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">nearby competitors ranking above</div></div>
+    </div>
+  </div>
+
+  <footer>
+    Built for Turbo Speed Auto Sales by Mile High AI · <a href="tel:3036680444">303-668-0444</a>
+  </footer>
+</div>
+
+<div class="voice-overlay" id="voiceOverlay" onclick="toggleVoice(false)"></div>
+<button class="voice-fab" onclick="toggleVoice(true)" aria-label="Chat with AI assistant">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+</button>
+<div class="voice-panel" id="voicePanel">
+  <div class="voice-panel-head">
+    <div><div class="vtitle">Turbo Speed Assistant</div><div class="vsub">● Live example — answers every call like this</div></div>
+    <button class="voice-close" onclick="toggleVoice(false)">✕</button>
+  </div>
+  <div class="chat-bubble caller">Hey, do you guys still have the Silverado listed?</div>
+  <div class="chat-bubble ai">Let me check for you — yes, it's still available. Want me to hold it and get you set up for a test drive today?</div>
+  <div class="chat-bubble caller">Yeah that'd be great, I'm free this afternoon</div>
+  <div class="chat-bubble ai">Perfect, I've got you down and flagged for our sales team — you're in the queue and someone will confirm your time shortly.</div>
+</div>
+<script>
+  function toggleVoice(open) {
+    document.getElementById('voicePanel').classList.toggle('open', open);
+    document.getElementById('voiceOverlay').classList.toggle('open', open);
+  }
+</script>
+</body>
+</html>

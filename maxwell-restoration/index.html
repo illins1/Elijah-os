@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maxwell Restoration | Flood, Fire, Mold, Rebuild — Denver</title>
+<style>
+  :root {
+    --bg: #10140F; --panel: #17201A; --border: #253026;
+    --text: #EDEFE9; --muted: #9BA69A;
+    --accent: #3F6B4A; --accent-light: #6FA97D;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, 'Inter', system-ui, sans-serif; }
+  .wrap { max-width: 480px; margin: 0 auto; }
+  header {
+    padding: 40px 22px 30px; text-align: center;
+    background: radial-gradient(circle at 50% 0%, #1D2A20 0%, #10140F 70%);
+    border-bottom: 1px solid var(--border);
+  }
+  .badge {
+    display:inline-flex; align-items:center; gap:6px; font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color: var(--accent-light); font-weight:700; margin-bottom:14px;
+  }
+  .badge::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--accent-light); box-shadow:0 0 8px var(--accent-light); }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing:-0.02em; line-height:1.1; }
+  .tagline { color: var(--muted); font-size: 14.5px; margin-top: 10px; font-style: italic; }
+  .services { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:20px; }
+  .service-pill {
+    font-size:12px; padding:6px 14px; border:1px solid var(--accent); border-radius:20px;
+    color: var(--accent-light); font-weight:600; letter-spacing:.03em;
+  }
+  .cta-row { padding: 24px 22px; display:flex; flex-direction:column; gap:10px; }
+  .btn { display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px;
+    border-radius:10px; font-weight:700; font-size:15px; text-decoration:none; border:none; }
+  .btn-primary { background: var(--accent-light); color: #0C120D; }
+  .btn-secondary { background: transparent; border:1px solid var(--border); color: var(--text); }
+  section { padding: 8px 22px 28px; }
+  .section-label { font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:700; margin-bottom:12px; }
+  .audit-card {
+    background: var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px;
+    margin: 0 22px 28px;
+  }
+  .audit-card h3 { font-size:17px; margin-bottom:8px; }
+  .audit-card p { font-size:13.5px; color: var(--muted); line-height:1.55; margin-bottom:14px; }
+  .stat-row { display:flex; gap:14px; margin-top: 6px; }
+  .stat { flex:1; text-align:center; background: rgba(0,0,0,.2); border-radius:10px; padding:12px 6px; }
+  .stat-num { font-size:20px; font-weight:800; color: var(--accent-light); }
+  .stat-label { font-size:10.5px; color: var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.05em; }
+  footer { padding: 22px; border-top:1px solid var(--border); text-align:center; color: var(--muted); font-size:12px; }
+  footer a { color: var(--accent-light); text-decoration:none; }
+
+  .included-grid { display:flex; flex-direction:column; gap:10px; }
+  .included-item { display:flex; align-items:flex-start; gap:12px; background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:14px; }
+  .included-icon { font-size:20px; flex-shrink:0; width:30px; text-align:center; }
+  .included-title { font-size:14px; font-weight:700; margin-bottom:2px; }
+  .included-sub { font-size:12px; color: var(--muted); line-height:1.4; }
+
+  .feature-list { display:flex; flex-direction:column; gap:10px; }
+  .feature-item { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color: var(--text); line-height:1.4; background: var(--panel); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+  .feature-dot { flex-shrink:0; width:7px; height:7px; border-radius:50%; background: var(--accent-light); margin-top:5px; box-shadow:0 0 6px var(--accent-light); }
+  .reviews-card { background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .reviews-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .stars { color:#F0B429; font-size:16px; letter-spacing:1px; }
+  .reviews-count { font-size:12.5px; color: var(--muted); font-weight:600; }
+  .reviews-note { font-size:13px; color: var(--muted); line-height:1.5; }
+
+  .voice-fab {
+    position: fixed; bottom: 20px; right: 20px; width: 58px; height: 58px; border-radius: 50%;
+    background: var(--accent-light); border: none; display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 4px 20px rgba(111,169,125,0.5); cursor:pointer; z-index: 50;
+    animation: fabPulse 2.4s infinite;
+  }
+  @keyframes fabPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(111,169,125,.5);} 50%{ box-shadow:0 0 0 12px rgba(111,169,125,0);} }
+  .voice-fab svg { width:26px; height:26px; }
+  .voice-panel {
+    position: fixed; bottom: 0; left:0; right:0; max-width:480px; margin:0 auto;
+    background: var(--panel); border-top:1px solid var(--border); border-radius: 18px 18px 0 0;
+    padding: 18px; transform: translateY(110%); transition: transform .3s ease; z-index: 60;
+    max-height: 70vh; overflow-y: auto;
+  }
+  .voice-panel.open { transform: translateY(0); }
+  .voice-panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .voice-panel-head .vtitle { font-weight:700; font-size:14px; }
+  .voice-panel-head .vsub { font-size:11px; color: var(--accent-light); }
+  .voice-close { background:none; border:none; color: var(--muted); font-size:20px; cursor:pointer; }
+  .chat-bubble { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: 13.5px; line-height:1.4; margin-bottom:10px; }
+  .chat-bubble.caller { background: var(--border); margin-left:auto; border-bottom-right-radius:4px; }
+  .chat-bubble.ai { background: var(--accent); color:#fff; margin-right:auto; border-bottom-left-radius:4px; }
+  .voice-overlay { position:fixed; inset:0; background: rgba(0,0,0,.5); z-index:55; display:none; }
+  .voice-overlay.open { display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">Denver &amp; Front Range · 24/7 Response</div>
+    <h1>Maxwell Restoration</h1>
+    <div class="tagline">Cleaning up what disasters leave behind</div>
+    <div class="services">
+      <span class="service-pill">Flood</span>
+      <span class="service-pill">Fire</span>
+      <span class="service-pill">Mold</span>
+      <span class="service-pill">Rebuild</span>
+    </div>
+  </header>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="tel:9707172511">Call Now — 970-717-2511</a>
+    <a class="btn btn-secondary" href="sms:9707172511">Text Us</a>
+  </div>
+
+  <section>
+    <div class="section-label">Everything included with Mile High AI</div>
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-icon">📍</div>
+        <div><div class="included-title">Google Maps &amp; Map Pack</div><div class="included-sub">Show up in the top 3 local map results, not buried on page 2</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">⭐</div>
+        <div><div class="included-title">Yelp &amp; Google Reviews</div><div class="included-sub">Synced and pulled into AI answers automatically</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">☎</div>
+        <div><div class="included-title">24/7 Call Answering</div><div class="included-sub">The voice assistant below — live on your site, every call</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📱</div>
+        <div><div class="included-title">Social Media Posting</div><div class="included-sub">Regular posts keeping your business active and visible</div></div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📈</div>
+        <div><div class="included-title">Monthly AI Visibility Tracking</div><div class="included-sub">See exactly where you rank across AI engines, every month</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Never miss a call, day or night</div>
+    <div class="feature-list">
+      <div class="feature-item"><span class="feature-dot"></span>Every call answered instantly — even at 2 AM during a flood</div>
+      <div class="feature-item"><span class="feature-dot"></span>AI learns your services and answers like your front desk would</div>
+      <div class="feature-item"><span class="feature-dot"></span>Every caller stays in your pipeline until you follow up personally</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Shows up where reviews matter</div>
+    <div class="reviews-card">
+      <div class="reviews-row">
+        <span class="stars">★★★★★</span>
+        <span class="reviews-count">Google &amp; Yelp reviews synced</span>
+      </div>
+      <p class="reviews-note">AI assistants read your reviews before recommending you. We make sure yours are visible where it counts — not just on your page, but inside the AI answer itself.</p>
+    </div>
+  </section>
+
+  <div class="audit-card">
+    <h3>Your Free AI Visibility Audit</h3>
+    <p>When someone in Denver searches "flood damage help near me" or asks an AI assistant "who do I call for fire restoration" — are you the name that comes up? We checked. Here's what we found.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">AI engines checked</div></div>
+      <div class="stat"><div class="stat-num">2/6</div><div class="stat-label">show your business</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">competitor gaps found</div></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Why this matters right now</div>
+    <p style="font-size:14px; color:var(--muted); line-height:1.6;">
+      Disaster calls are urgent and emotional — people ask their phone "who's open now" before they open a phone book. If AI assistants and Google's AI overview aren't citing Maxwell Restoration by name, that emergency call is going to whoever they mention first. This audit shows exactly where you're being skipped and what closes the gap.
+    </p>
+  </section>
+
+  <footer>
+    Built for Maxwell Restoration by Mile High AI · <a href="tel:9707172511">970-717-2511</a>
+  </footer>
+</div>
+
+<div class="voice-overlay" id="voiceOverlay" onclick="toggleVoice(false)"></div>
+<button class="voice-fab" onclick="toggleVoice(true)" aria-label="Chat with AI assistant">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#0C120D" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+</button>
+<div class="voice-panel" id="voicePanel">
+  <div class="voice-panel-head">
+    <div><div class="vtitle">Maxwell Restoration Assistant</div><div class="vsub">● Live example — answers every call like this</div></div>
+    <button class="voice-close" onclick="toggleVoice(false)">✕</button>
+  </div>
+  <div class="chat-bubble caller">Hi, our basement's flooding, we need someone today</div>
+  <div class="chat-bubble ai">I'm so sorry — let's get this handled fast. Can I get your address and whether the water's still rising?</div>
+  <div class="chat-bubble caller">1420 Sherman St, and yeah it's still coming in</div>
+  <div class="chat-bubble ai">Got it. I'm flagging this as urgent and getting a Maxwell crew notified right now. You'll get a call back within minutes — you're in the queue and this is being handled.</div>
+</div>
+<script>
+  function toggleVoice(open) {
+    document.getElementById('voicePanel').classList.toggle('open', open);
+    document.getElementById('voiceOverlay').classList.toggle('open', open);
+  }
+</script>
+</body>
+</html>

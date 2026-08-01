@@ -1,1 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[HVAC COMPANY NAME] — Never Miss a Call</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap');
 
+  :root{
+    --navy:#1B2A3D;
+    --navy-deep:#131F2C;
+    --ember:#D9642C;
+    --ice:#7FB8C4;
+    --off:#F2EFE9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--off);
+    color:var(--navy);
+    font-family:'Source Sans 3',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--navy);
+    color:var(--off);
+    padding:30px 22px 34px;
+    position:relative;
+    overflow:hidden;
+  }
+  .dial{
+    position:absolute;
+    top:-60px; right:-60px;
+    width:180px; height:180px;
+    border-radius:50%;
+    border:14px solid var(--ember);
+    opacity:0.18;
+  }
+  .badge{
+    display:inline-block;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ice);
+    margin-bottom:16px;
+  }
+  h1{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:30px;
+    line-height:1.15;
+    position:relative;
+    z-index:1;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--ember);
+  }
+  .sub{
+    margin-top:14px;
+    font-size:14.5px;
+    color:#C6D0DA;
+    line-height:1.6;
+    position:relative;
+    z-index:1;
+  }
+
+  .split-stat{
+    display:flex;
+    margin-top:24px;
+    background:var(--navy-deep);
+    border-radius:8px;
+    overflow:hidden;
+    position:relative;
+    z-index:1;
+  }
+  .split-stat div{
+    flex:1;
+    padding:16px 14px;
+    text-align:center;
+  }
+  .split-stat div:first-child{border-right:1px solid #2A3B4E;}
+  .split-stat .num{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:24px;
+    color:var(--ember);
+  }
+  .split-stat .num.ice{color:var(--ice);}
+  .split-stat .lbl{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:#9FB0BF;
+    margin-top:2px;
+  }
+
+  section{padding:28px 22px;}
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ember);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  h2{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    margin-bottom:16px;
+    color:var(--navy);
+  }
+  p{font-size:14.5px; line-height:1.6; color:#4A5A68;}
+
+  .call-flow{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .flow-step{
+    display:flex;
+    gap:14px;
+    padding:14px 0;
+    border-left:2px solid #DCD6C9;
+    padding-left:18px;
+    position:relative;
+  }
+  .flow-step::before{
+    content:'';
+    position:absolute;
+    left:-6px; top:18px;
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--ember);
+  }
+  .flow-step h3{
+    font-size:15px;
+    color:var(--navy);
+    margin-bottom:3px;
+    font-weight:600;
+  }
+  .flow-step p{font-size:13.5px;}
+
+  .chat-demo{
+    background:#fff;
+    border:1px solid #E2DCD0;
+    border-radius:10px;
+    padding:16px;
+    margin-top:18px;
+  }
+  .msg{
+    background:var(--off);
+    border-radius:6px;
+    padding:12px 14px;
+    font-size:13.5px;
+    margin-bottom:10px;
+    line-height:1.5;
+    color:#3A4552;
+  }
+  .msg.out{
+    background:var(--navy);
+    color:#fff;
+    margin-left:18%;
+  }
+  .msg .tag{
+    display:block;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--ember);
+    margin-bottom:4px;
+  }
+  .msg.out .tag{color:var(--ice);}
+
+  .price-card{
+    background:#fff;
+    border:1px solid #E2DCD0;
+    border-radius:10px;
+    padding:22px;
+  }
+  .price-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:12px 0;
+    border-bottom:1px solid #EEE8DC;
+  }
+  .price-line:last-child{border-bottom:none;}
+  .price-line .amt{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:var(--navy);
+  }
+  .price-line .desc{font-size:12.5px; color:#7A8695;}
+
+  footer{
+    position:fixed;
+    bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:430px;
+    background:var(--ember);
+    padding:16px 22px;
+    text-align:center;
+  }
+  footer a{
+    display:block;
+    color:#fff;
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    text-decoration:none;
+  }
+  footer .sub-note{
+    font-size:11px;
+    color:#FBDCC8;
+    margin-top:2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="dial"></div>
+  <span class="badge">Live Demo — Built For [HVAC Company Name]</span>
+  <h1>The 2am no-heat call <em>doesn't have to wait</em> till morning.</h1>
+  <p class="sub">This is what your dispatch line could look like — live in under a week, no contract.</p>
+  <div class="split-stat">
+    <div>
+      <div class="num">62%</div>
+      <div class="lbl">of HVAC calls hit voicemail after hours</div>
+    </div>
+    <div>
+      <div class="num ice">$0</div>
+      <div class="lbl">extra staff needed to fix it</div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="eyebrow">How it works</div>
+  <h2>Every call, answered, every time</h2>
+  <div class="call-flow">
+    <div class="flow-step">
+      <div>
+        <h3>Furnace dies at 11pm</h3>
+        <p>Customer calls or texts — system responds in under a minute, no hold music.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h3>Emergency gets triaged</h3>
+        <p>No-heat and no-AC calls flagged urgent, routine maintenance scheduled automatically.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h3>You wake up to booked jobs</h3>
+        <p>Calendar's already filled with confirmed appointments, sorted by priority.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-demo">
+    <div class="msg">
+      <span class="tag">Missed call · 11:14pm</span>
+      Our furnace just stopped completely, it's freezing in here with two kids. Can someone come tonight?
+    </div>
+    <div class="msg out">
+      <span class="tag">Auto-reply · 11:14pm</span>
+      I'm sorry you're dealing with that. I've flagged this as urgent — first tech available in the morning will call you within 15 minutes of opening. Stay warm tonight.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">The offer</div>
+  <h2>Simple, no contract</h2>
+  <div class="price-card">
+    <div class="price-line">
+      <div class="desc">One-time setup<br>Demo site + AI call/text system live</div>
+      <div class="amt">$497</div>
+    </div>
+    <div class="price-line">
+      <div class="desc">Monthly<br>Fully managed, cancel anytime</div>
+      <div class="amt">$297</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="sms:+10000000000">Text Me To Get Started →</a>
+  <div class="sub-note">Reply and we'll have you live this week</div>
+</footer>
+
+</body>
+</html>
