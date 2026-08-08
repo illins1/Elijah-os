@@ -549,13 +549,29 @@ function esc(s) {
 
 // ---------- INIT ----------
 (async () => {
-  const defaultWarmLeads = [{
-    name: 'Rick Guedes',
-    business: 'Guedes Construction — reactivation (2009-11 client)',
-    phone: '7605596907',
-    demo: '',
-    sms: "Hey Rick — it's Elijah. Been a minute! I started an AI/web agency here in Denver, Mile High AI, and thought of Guedes Construction. Got 5 min this week?"
-  }];
+  const defaultWarmLeads = [
+    {
+      name: 'Rick Guedes',
+      business: 'Guedes Construction — reactivation (2009-11 client)',
+      phone: '7605596907',
+      demo: '',
+      sms: "Hey Rick — it's Elijah. Been a minute! I started an AI/web agency here in Denver, Mile High AI, and thought of Guedes Construction. Got 5 min this week?"
+    },
+    {
+      name: 'Frank Dunker',
+      business: 'Budget Painting (San Diego) — reactivation, largest historical client',
+      phone: '',
+      demo: 'https://illins1.github.io/Elijah-os/budget-painting/',
+      sms: "Hey Frank — it's Elijah. Been a minute! Built you something to show what I've been up to:"
+    },
+    {
+      name: 'Jon',
+      business: 'QCD Promos — reactivation',
+      phone: '',
+      demo: 'https://illins1.github.io/Elijah-os/qcd-promos/',
+      sms: "Hey Jon — it's Elijah. Been a minute! Built you something to show what I've been up to:"
+    }
+  ];
   warmLeads = await loadKey('cc:warmleads', defaultWarmLeads);
   scraperLeads = await loadKey('cc:scraper', []);
   demoLinks = await loadKey('cc:demos', []);
