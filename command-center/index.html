@@ -573,7 +573,12 @@ function esc(s) {
     }
   ];
   warmLeads = await loadKey('cc:warmleads', defaultWarmLeads);
-  scraperLeads = await loadKey('cc:scraper', []);
+  scraperLeads = await loadKey('cc:scraper', [
+    { name: 'Englewood Auto Repair & Body Shop', niche: 'auto repair, S Broadway', track: 'LOCAL', emergency: 'no', phone: '3037613246' },
+    { name: 'B&A Automotive', niche: 'auto repair, S Broadway — family-run', track: 'LOCAL', emergency: 'no', phone: '3039161649' },
+    { name: 'LG Automotive', niche: 'auto repair, S Broadway — family-run', track: 'LOCAL', emergency: 'no', phone: '3035477875' },
+    { name: 'Emergency Plumbers Denver LLC', niche: 'emergency plumbing — small local operator', track: 'LOCAL', emergency: 'yes', phone: '7202158600' }
+  ]);
   demoLinks = await loadKey('cc:demos', []);
   pipeline = await loadKey('cc:pipeline', []);
   renderWarmLeads();
