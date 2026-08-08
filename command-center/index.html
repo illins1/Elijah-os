@@ -331,15 +331,15 @@ function toggleForm(id) {
   el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
-// ---------- STORAGE HELPERS ----------
+// ---------- STORAGE HELPERS (browser localStorage — this is a live site, not a Claude artifact) ----------
 async function loadKey(key, fallback) {
   try {
-    const r = await window.storage.get(key);
-    return r && r.value ? JSON.parse(r.value) : fallback;
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
   } catch (e) { return fallback; }
 }
 async function saveKey(key, value) {
-  try { await window.storage.set(key, JSON.stringify(value)); }
+  try { localStorage.setItem(key, JSON.stringify(value)); }
   catch (e) { console.error('save failed', key, e); }
 }
 
@@ -549,7 +549,14 @@ function esc(s) {
 
 // ---------- INIT ----------
 (async () => {
-  warmLeads = await loadKey('cc:warmleads', []);
+  const defaultWarmLeads = [{
+    name: 'Rick Guedes',
+    business: 'Guedes Construction — reactivation (2009-11 client)',
+    phone: '7605596907',
+    demo: '',
+    sms: "Hey Rick — it's Elijah. Been a minute! I started an AI/web agency here in Denver, Mile High AI, and thought of Guedes Construction. Got 5 min this week?"
+  }];
+  warmLeads = await loadKey('cc:warmleads', defaultWarmLeads);
   scraperLeads = await loadKey('cc:scraper', []);
   demoLinks = await loadKey('cc:demos', []);
   pipeline = await loadKey('cc:pipeline', []);
