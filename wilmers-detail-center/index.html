@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilmer's Detail Center — AI Visibility Snapshot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0F1115; --card:#181B22; --border:#262A33; --gold:#F2A93B; --text:#EDEEF2; --muted:#9198A3; --green:#4CAF6D; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; max-width:430px; margin:0 auto;}
+  .hero{padding:36px 20px 28px; text-align:center; border-bottom:1px solid var(--border);}
+  .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  h1{font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:30px; margin:8px 0 4px;}
+  .sub{color:var(--muted); font-size:14px; line-height:1.5;}
+  .pulse-wrap{margin:22px auto 0; width:64px; height:64px; position:relative;}
+  .pulse{position:absolute; inset:0; border-radius:50%; background:var(--gold); opacity:.25; animation:pulse 2s infinite;}
+  .pulse-core{position:absolute; inset:14px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-size:20px;}
+  @keyframes pulse{0%{transform:scale(1); opacity:.35;}70%{transform:scale(2.1); opacity:0;}100%{opacity:0;}}
+  .section{padding:26px 20px; border-bottom:1px solid var(--border);}
+  .section h2{font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; margin:0 0 14px;}
+  .score-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .score{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 8px; text-align:center;}
+  .score .n{font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; color:#E3584B;}
+  .score .l{font-size:10px; color:var(--muted); text-transform:uppercase; margin-top:2px;}
+  .list{list-style:none; padding:0; margin:0;}
+  .list li{display:flex; gap:10px; padding:10px 0; font-size:14px; border-bottom:1px solid var(--border);}
+  .list li:last-child{border:none;}
+  .check{color:var(--green); font-weight:800;}
+  .cross{color:#E3584B; font-weight:800;}
+  .miss-call{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px;}
+  .miss-call .n{font-family:'Barlow Condensed',sans-serif; font-size:26px; color:var(--gold); font-weight:800;}
+  .cta{padding:26px 20px 40px; text-align:center;}
+  .btn{display:block; width:100%; padding:16px; border-radius:14px; font-weight:700; font-size:15px; text-decoration:none; margin-bottom:10px;}
+  .btn.primary{background:var(--gold); color:#1a1300;}
+  .btn.secondary{background:transparent; border:1px solid var(--border); color:var(--text);}
+  .price{color:var(--muted); font-size:12px; margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">Free AI Visibility Snapshot</div>
+  <h1>Wilmer's Detail Center</h1>
+  <div class="sub">Built for you by Mile High AI — here's how you show up to AI search right now.</div>
+  <div class="pulse-wrap"><div class="pulse"></div><div class="pulse-core">🚗</div></div>
+</div>
+<div class="section">
+  <h2>Your AI Visibility Score</h2>
+  <div class="score-grid">
+    <div class="score"><div class="n">2/10</div><div class="l">Google AI</div></div>
+    <div class="score"><div class="n">1/10</div><div class="l">ChatGPT</div></div>
+    <div class="score"><div class="n">4/10</div><div class="l">Reviews</div></div>
+  </div>
+</div>
+<div class="section">
+  <h2>What's costing you bookings</h2>
+  <ul class="list">
+    <li><span class="cross">✕</span> AI assistants can't find your services, pricing, or hours</li>
+    <li><span class="cross">✕</span> Weekend and after-hours booking requests go nowhere</li>
+    <li><span class="cross">✕</span> Reviews aren't being requested consistently after each detail</li>
+    <li><span class="check">✓</span> Quality work on S. Broadway — just not indexed for AI search</li>
+  </ul>
+</div>
+<div class="section">
+  <h2>Never miss a booking</h2>
+  <div class="miss-call">
+    <div class="n">24/7</div>
+    <div style="font-size:13px; color:var(--muted); margin-top:4px;">AI answers, quotes packages, and books appointments automatically — even on a Sunday night.</div>
+  </div>
+</div>
+<div class="cta">
+  <a class="btn primary" href="tel:7207917333">Call Wilmer's Now</a>
+  <a class="btn secondary" href="sms:7205398397">Text Elijah — See It Live</a>
+  <div class="price">Setup $497 · $297/mo — no contract</div>
+</div>
+</body>
+</html>
