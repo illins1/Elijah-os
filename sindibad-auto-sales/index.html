@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sindibad Auto Sales — Never Miss a Buyer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap');
+  :root{
+    --navy:#182B26;
+    --navy-deep:#101E1A;
+    --ember:#2E9E6B;
+    --ice:#E3B23C;
+    --off:#F3F1E9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--off); color:var(--navy); font-family:'Source Sans 3',sans-serif; -webkit-font-smoothing:antialiased; max-width:430px; margin:0 auto; min-height:100vh; padding-bottom:90px; }
+  header{ background:var(--navy); color:var(--off); padding:0 0 34px; position:relative; overflow:hidden; }
+  .hero-img{ width:100%; height:190px; object-fit:cover; display:block; }
+  .hero-fade{ position:relative; margin-top:-50px; background:linear-gradient(180deg, rgba(24,43,38,0) 0%, var(--navy) 60%); height:50px; }
+  .hero-inner{ padding:0 22px; }
+  .badge{ display:inline-block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ice); margin-bottom:16px; }
+  h1{ font-family:'Manrope',sans-serif; font-weight:800; font-size:27px; line-height:1.18; }
+  h1 em{ font-style:normal; color:var(--ember); }
+  .sub{ margin-top:14px; font-size:14.5px; color:#C6D1CB; line-height:1.6; }
+  .split-stat{ display:flex; margin-top:24px; background:var(--navy-deep); border-radius:8px; overflow:hidden; }
+  .split-stat div{ flex:1; padding:16px 14px; text-align:center; }
+  .split-stat div:first-child{border-right:1px solid #223731;}
+  .split-stat .num{ font-family:'Manrope',sans-serif; font-weight:800; font-size:24px; color:var(--ember); }
+  .split-stat .num.ice{color:var(--ice);}
+  .split-stat .lbl{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:#96A69F; margin-top:2px; }
+  section{padding:28px 22px;}
+  .eyebrow{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ember); font-weight:600; margin-bottom:10px; }
+  h2{ font-family:'Manrope',sans-serif; font-weight:700; font-size:21px; margin-bottom:16px; color:var(--navy); }
+  p{font-size:14.5px; line-height:1.6; color:#4B5750;}
+  .call-flow{ display:flex; flex-direction:column; gap:0; }
+  .flow-step{ display:flex; gap:14px; padding:14px 0; border-left:2px solid #DAD3C1; padding-left:18px; position:relative; }
+  .flow-step::before{ content:''; position:absolute; left:-6px; top:18px; width:10px; height:10px; border-radius:50%; background:var(--ember); }
+  .flow-step h3{ font-size:15px; color:var(--navy); margin-bottom:3px; font-weight:600; }
+  .flow-step p{font-size:13.5px;}
+  .chat-demo{ background:#fff; border:1px solid #DFDAC5; border-radius:10px; padding:16px; margin-top:18px; }
+  .msg{ background:var(--off); border-radius:6px; padding:12px 14px; font-size:13.5px; margin-bottom:10px; line-height:1.5; color:#3D473F; }
+  .msg.out{ background:var(--navy); color:#fff; margin-left:18%; }
+  .msg .tag{ display:block; font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--ember); margin-bottom:4px; }
+  .msg.out .tag{color:var(--ice);}
+  .review-card{ background:#fff; border:1px solid #DFDAC5; border-radius:10px; padding:16px; margin-bottom:12px; }
+  .stars{ color:var(--ice); font-size:14px; letter-spacing:2px; margin-bottom:6px; }
+  .review-card p{ font-size:13.5px; font-style:italic; color:#4B5750; }
+  .review-card .who{ margin-top:8px; font-size:12px; color:#8A9490; font-style:normal; }
+  .price-card{ background:#fff; border:1px solid #DFDAC5; border-radius:10px; padding:22px; }
+  .price-line{ display:flex; justify-content:space-between; align-items:baseline; padding:12px 0; border-bottom:1px solid #ECE6D3; }
+  .price-line:last-child{ border-bottom:none; }
+  .price-line .amt{ font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; color:var(--navy); }
+  .price-line .desc{ font-size:12.5px; color:#83907F; }
+  .info-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #E4DECB; font-size:13.5px; }
+  .info-row:last-child{border-bottom:none;}
+  .info-row .k{color:#83907F;}
+  .info-row .v{color:var(--navy); font-weight:600; text-align:right;}
+  footer{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:var(--ember); padding:16px 22px; text-align:center; }
+  footer a{ display:block; color:#fff; font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; text-decoration:none; }
+  footer .sub-note{ font-size:11px; color:#D9F0E3; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="hero-img" src="storefront.jpg" alt="Sindibad Auto Sales storefront on South Broadway">
+  <div class="hero-fade"></div>
+  <div class="hero-inner">
+    <span class="badge">Live Demo — Built For Sindibad Auto Sales</span>
+    <h1>The buyer texting at 8pm about the Forester <em>shouldn't wait till you open.</em></h1>
+    <p class="sub">This is what your lead intake could look like — live in under a week, no contract.</p>
+    <div class="split-stat">
+      <div>
+        <div class="num">70%</div>
+        <div class="lbl">of used-car buyers contact whoever replies first</div>
+      </div>
+      <div>
+        <div class="num ice">$0</div>
+        <div class="lbl">extra staff needed to fix it</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="eyebrow">How it works</div>
+  <h2>Every inquiry, answered, every time</h2>
+  <div class="call-flow">
+    <div class="flow-step">
+      <div>
+        <h3>Buyer sees a car online after hours</h3>
+        <p>They text or message about a specific vehicle — system replies in under a minute.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h3>Interest gets qualified automatically</h3>
+        <p>Which vehicle, budget, financing needs, and trade-in — all captured before you ever call back.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h3>You open to a booked test drive</h3>
+        <p>Calendar's already got the appointment on it, details attached.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-demo">
+    <div class="msg">
+      <span class="tag">Missed message · 8:14pm</span>
+      Hi, is the Mazda CX-5 still available? What's the mileage and are you open to financing?
+    </div>
+    <div class="msg out">
+      <span class="tag">Auto-reply · 8:14pm</span>
+      Yes, it's still on the lot! We do offer financing with flexible options. Can I get your name and best time tomorrow to come take a look and test drive it?
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Why buyers trust you</div>
+  <h2>Your reputation, already doing the work</h2>
+  <div class="review-card">
+    <div class="stars">★★★★★</div>
+    <p>"Fantastic dealership. All the cars are in great condition and the owner treated us so respectfully. Would give six stars if I could."</p>
+    <div class="who">— Google review</div>
+  </div>
+  <div class="review-card">
+    <div class="stars">★★★★★</div>
+    <p>"Small, friendly lot right off Broadway — honest, fair pricing, no pushy sales tactics. Best car-buying experience I've had."</p>
+    <div class="who">— Google review</div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">On file</div>
+  <h2>Dealership info</h2>
+  <div class="price-card">
+    <div class="info-row"><span class="k">Address</span><span class="v">4267 S Broadway<br>Englewood, CO 80113</span></div>
+    <div class="info-row"><span class="k">Phone</span><span class="v">(303) 569-6394</span></div>
+    <div class="info-row"><span class="k">Mon–Fri</span><span class="v">9:00 AM – 7:00 PM</span></div>
+    <div class="info-row"><span class="k">Saturday</span><span class="v">9:00 AM – 6:00 PM</span></div>
+    <div class="info-row"><span class="k">Sunday</span><span class="v">Closed</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">The offer</div>
+  <h2>Simple, no contract</h2>
+  <div class="price-card">
+    <div class="price-line">
+      <div class="desc">One-time setup<br>Demo site + AI lead intake system live</div>
+      <div class="amt">$497</div>
+    </div>
+    <div class="price-line">
+      <div class="desc">Monthly<br>Fully managed, cancel anytime</div>
+      <div class="amt">$297</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="sms:+13035696394">Text Me To Get Started →</a>
+  <div class="sub-note">Reply and we'll have you live this week</div>
+</footer>
+
+</body>
+</html>
