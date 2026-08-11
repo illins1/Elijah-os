@@ -1,563 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ELIJAH-OS Command Center</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Command Center — Mile High AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #14171C;
-    --panel: #1D2128;
-    --panel-2: #21252C;
-    --border: #2E333B;
-    --text: #E8E6DF;
-    --muted: #8B9199;
-    --dim: #5B6068;
-    --local: #3FA796;
-    --local-glow: rgba(63,167,150,0.35);
-    --flag: #C97B4A;
-    --flag-glow: rgba(201,123,74,0.35);
-    --alert: #D9484B;
-    --alert-glow: rgba(217,72,75,0.35);
+  :root{
+    --bg:#111318; --card:#1B1E26; --card-border:#2A2E38;
+    --gold:#F2A93B; --gold-dim:#8a6420; --sky:#4FA8D8;
+    --text:#EDEEF2; --muted:#8B8F98; --green:#4CAF6D; --red:#E3584B;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .app {
-    max-width: 430px;
-    margin: 0 auto;
-    min-height: 100vh;
-    padding-bottom: 84px;
-    position: relative;
-  }
-  .mono {
-    font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-  }
-  header {
-    padding: 20px 18px 14px;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(20,23,28,0.92);
-    backdrop-filter: blur(8px);
-    z-index: 20;
-  }
-  .live-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--local);
-    box-shadow: 0 0 8px var(--local-glow);
-    display: inline-block;
-    animation: pulse 2s infinite;
-    margin-right: 7px;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-  @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-  .eyebrow {
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--muted); display:flex; align-items:center;
-  }
-  h1 { font-size: 21px; margin: 6px 0 0; font-weight: 700; letter-spacing: -0.01em; }
-  .tab-panel { display: none; padding: 18px; }
-  .tab-panel.active { display: block; }
-  .section-label {
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); margin: 22px 0 10px; font-weight: 600;
-  }
-  .section-label:first-child { margin-top: 0; }
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .lead-card { border-left: 3px solid var(--local); }
-  .lead-name { font-weight: 700; font-size: 16px; }
-  .lead-sub { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
-  .btn-row { display: flex; gap: 8px; margin-top: 12px; }
-  .btn {
-    flex: 1; min-height: 44px; border-radius: 8px; border: none;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer;
-    gap: 6px;
-  }
-  .btn-call { background: var(--local); color: #0E1116; }
-  .btn-text { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
-  .btn-demo { background: var(--flag); color: #0E1116; }
-  .btn-ghost {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    min-height: 40px; border-radius: 8px; font-size: 12.5px; cursor: pointer;
-  }
-  input, select, textarea {
-    width: 100%; background: var(--panel-2); border: 1px solid var(--border);
-    border-radius: 8px; color: var(--text); padding: 10px 12px; font-size: 14px;
-    font-family: inherit; margin-top: 4px;
-  }
-  input::placeholder, textarea::placeholder { color: #4A4F58; }
-  label.field { display:block; font-size: 11px; color: var(--muted); margin-top:10px; text-transform: uppercase; letter-spacing: .06em; }
-  .empty {
-    border: 1px dashed var(--border); border-radius: 10px; padding: 26px 16px;
-    text-align: center; color: var(--dim); font-size: 13.5px;
-  }
-  .pill {
-    display: inline-block; font-size: 10.5px; padding: 3px 9px; border-radius: 20px;
-    font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: .04em;
-  }
-  .pill-emergency { background: rgba(217,72,75,0.15); color: var(--alert); }
-  .pill-local { background: rgba(63,167,150,0.15); color: var(--local); }
-  .pill-flag { background: rgba(201,123,74,0.15); color: var(--flag); }
-  .pill-stage { background: rgba(139,145,153,0.15); color: var(--muted); }
-  .lead-scraper { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
-  .row-actions { display:flex; gap:6px; margin-top:10px; }
-  .link-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
-  .link-row:last-child { border-bottom:none; }
-  .niche-name { font-weight:600; font-size:14px; }
-  .status-open { color: var(--local); font-size:11px; font-family:'JetBrains Mono',monospace; }
-  .status-empty { color: var(--dim); font-size:11px; font-family:'JetBrains Mono',monospace; }
-  .stage-col { margin-bottom: 20px; }
-  .stage-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-  .stage-dot { width:7px;height:7px;border-radius:50%; }
-  .rule-block { margin-bottom: 16px; }
-  .rule-title { font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:4px; }
-  .rule-body { font-size:12.5px; color: var(--muted); line-height:1.5; }
-  nav.bottom {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 100%; max-width: 430px; background: rgba(29,33,40,0.97);
-    backdrop-filter: blur(10px); border-top: 1px solid var(--border);
-    display: flex; z-index: 30;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  nav.bottom button {
-    flex: 1; background: none; border: none; padding: 10px 4px 12px;
-    color: var(--dim); font-size: 10px; font-family: 'JetBrains Mono', monospace;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    cursor: pointer; letter-spacing: 0.03em;
-  }
-  nav.bottom button.active { color: var(--local); }
-  nav.bottom svg { width: 20px; height: 20px; }
-  .add-form { display:flex; flex-direction:column; gap:0; }
-  .save-btn {
-    margin-top: 12px; width: 100%; min-height: 42px; background: var(--local);
-    color: #0E1116; border: none; border-radius: 8px; font-weight: 700; font-size: 13.5px;
-    cursor: pointer;
-  }
-  .toggle-add {
-    width:100%; min-height:44px; border-radius:10px; border:1px dashed var(--border);
-    background:transparent; color: var(--muted); font-size:13px; cursor:pointer; margin-top: 4px;
-  }
-  .del-btn { background:none;border:none;color:#3A3F47;cursor:pointer;padding:4px;flex-shrink:0; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; max-width:430px; margin:0 auto; min-height:100vh; padding-bottom:90px; }
+  header{ padding:22px 18px 16px; border-bottom:1px solid var(--card-border); position:sticky; top:0; background:var(--bg); z-index:10; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  h1{ font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:30px; margin:2px 0 0; letter-spacing:.01em; }
+  .elevation{ display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); margin-top:6px; }
+  .elevation .num{ color:var(--gold); font-weight:700; font-family:'Barlow Condensed',sans-serif; font-size:13px; }
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:16px 18px 4px; }
+  .stat{ background:var(--card); border:1px solid var(--card-border); border-radius:12px; padding:12px 10px; text-align:center; }
+  .stat .n{ font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:700; }
+  .stat .l{ font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+  .filters{ display:flex; gap:8px; padding:14px 18px 6px; overflow-x:auto; }
+  .filter{ flex:0 0 auto; font-size:12px; padding:7px 13px; border-radius:20px; border:1px solid var(--card-border); color:var(--muted); font-weight:600; white-space:nowrap; }
+  .filter.active{ background:var(--gold); color:#1a1300; border-color:var(--gold); }
+  .list{ padding:8px 18px 0; }
+  .card{ background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px; margin-bottom:12px; }
+  .card.emergency{ border-color:var(--red); }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .biz-name{ font-weight:700; font-size:16px; }
+  .niche{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .status{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:4px 9px; border-radius:20px; white-space:nowrap; }
+  .status.new{ background:rgba(242,169,59,.15); color:var(--gold); }
+  .status.contacted{ background:rgba(79,168,216,.15); color:var(--sky); }
+  .status.demo{ background:rgba(76,175,109,.15); color:var(--green); }
+  .status.warm{ background:rgba(199,124,147,.15); color:#c97c93; }
+  .status.emergency{ background:rgba(227,88,75,.18); color:var(--red); }
+  .card-actions{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px; }
+  .btn{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:12px 4px; border-radius:12px; text-decoration:none; font-size:11px; font-weight:700; min-height:44px; border:1px solid var(--card-border); color:var(--text); }
+  .btn.call{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
+  .btn.text{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
+  .btn.demo{ background:transparent; color:var(--gold); border-color:var(--gold-dim); }
+  nav{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:#161822; border-top:1px solid var(--card-border); display:flex; padding:10px 8px calc(10px + env(safe-area-inset-bottom)); }
+  nav a{ flex:1; text-align:center; font-size:11px; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 0; }
+  nav a.active{ color:var(--gold); }
 </style>
 </head>
 <body>
-<div class="app">
-  <header>
-    <div class="eyebrow"><span class="live-dot"></span>ELIJAH-OS — Command Center</div>
-    <h1 id="pageTitle">Morning Briefing</h1>
-  </header>
 
-  <!-- BRIEFING -->
-  <div class="tab-panel active" id="tab-briefing">
-    <div class="section-label">Warm Leads — Call Queue</div>
-    <div id="warmLeadsList"></div>
+<header>
+  <div class="eyebrow">Mile High AI</div>
+  <h1>Command Center</h1>
+  <div class="elevation"><span class="num">5,280</span> ft — Front Range prospect pipeline</div>
+</header>
 
-    <div class="section-label">Add / Edit Warm Lead</div>
-    <div class="card">
-      <div class="add-form">
-        <label class="field">Name</label>
-        <input id="wl-name" placeholder="e.g. Rick Guedes" />
-        <label class="field">Business</label>
-        <input id="wl-business" placeholder="e.g. Guedes Construction" />
-        <label class="field">Phone</label>
-        <input id="wl-phone" placeholder="e.g. 3035551234" />
-        <label class="field">Demo link</label>
-        <input id="wl-demo" placeholder="https://..." />
-        <label class="field">Pre-written text</label>
-        <textarea id="wl-sms" rows="2" placeholder="Hey [name], just sent your demo — check it out here:"></textarea>
-        <button class="save-btn" onclick="saveWarmLead()">Save to call queue</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCRAPER -->
-  <div class="tab-panel" id="tab-scraper">
-    <div class="section-label">Emergency-Tier — Always Priority</div>
-    <div id="scraperEmergency"></div>
-
-    <div class="section-label">All Leads</div>
-    <div id="scraperList"></div>
-
-    <button class="toggle-add" onclick="toggleForm('scraperForm')">+ Add lead manually</button>
-    <div class="card" id="scraperForm" style="display:none; margin-top:10px;">
-      <div class="add-form">
-        <label class="field">Business name</label>
-        <input id="sc-name" placeholder="e.g. Mile High Emergency Vet" />
-        <label class="field">Niche</label>
-        <input id="sc-niche" placeholder="e.g. Emergency Vet" />
-        <label class="field">Track</label>
-        <select id="sc-track">
-          <option value="LOCAL">LOCAL</option>
-          <option value="FLAGSHIPS">FLAGSHIPS</option>
-        </select>
-        <label class="field">Emergency tier?</label>
-        <select id="sc-emergency">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-        <label class="field">Phone (optional)</label>
-        <input id="sc-phone" placeholder="3035551234" />
-        <button class="save-btn" onclick="saveScraperLead()">Add to feed</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMOS -->
-  <div class="tab-panel" id="tab-demos">
-    <div class="section-label">22 Niche Demo Sites — GitHub Pages</div>
-    <div class="card" id="demosCard"></div>
-    <div class="section-label" style="margin-top:20px;">Add Demo Link</div>
-    <div class="card">
-      <div class="add-form">
-        <label class="field">Niche</label>
-        <input id="dm-niche" placeholder="e.g. Emergency HVAC" />
-        <label class="field">Live URL</label>
-        <input id="dm-url" placeholder="https://yourname.github.io/..." />
-        <button class="save-btn" onclick="saveDemo()">Save link</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PIPELINE -->
-  <div class="tab-panel" id="tab-pipeline">
-    <div id="pipelineBoard"></div>
-    <button class="toggle-add" onclick="toggleForm('pipelineForm')">+ Add prospect to pipeline</button>
-    <div class="card" id="pipelineForm" style="display:none; margin-top:10px;">
-      <div class="add-form">
-        <label class="field">Business / contact</label>
-        <input id="pl-name" placeholder="e.g. James Epstein — Team Promotions" />
-        <label class="field">Stage</label>
-        <select id="pl-stage">
-          <option value="New">New</option>
-          <option value="Contacted">Contacted</option>
-          <option value="Demo Sent">Demo Sent</option>
-          <option value="Discovery Call">Discovery Call</option>
-          <option value="Closed">Closed</option>
-        </select>
-        <button class="save-btn" onclick="savePipeline()">Add to pipeline</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- REFERENCE -->
-  <div class="tab-panel" id="tab-reference">
-    <div class="section-label">Hosting Split (Locked)</div>
-    <div class="rule-block">
-      <div class="rule-title">GitHub Pages</div>
-      <div class="rule-body">Free static hosting — Command Center dashboard + all niche demo sites, organized as subfolders in one repo.</div>
-    </div>
-    <div class="rule-block">
-      <div class="rule-title">Netlify</div>
-      <div class="rule-body">Required specifically for tapsag.shop (send-gift.js serverless function). Default for anything else needing serverless — connect via GitHub repo import, not Netlify Drop, for reliability.</div>
-    </div>
-
-    <div class="section-label">Core Stack</div>
-    <div class="rule-block">
-      <div class="rule-title">Research → Build → Close</div>
-      <div class="rule-body">Perplexity researches, Claude builds, Elijah closes on the phone.</div>
-    </div>
-    <div class="rule-block">
-      <div class="rule-title">Pixa MCP</div>
-      <div class="rule-body">Core tool both tracks — image generation, background removal, upscaling, video generation.</div>
-    </div>
-    <div class="rule-block">
-      <div class="rule-title">Omnisend</div>
-      <div class="rule-body">Unified email + SMS across all projects. Base: api.omnisend.com/api/. Brand ID: 6a21801a96bec9e135e5990a.</div>
-    </div>
-    <div class="rule-block">
-      <div class="rule-title">GitHub connector</div>
-      <div class="rule-body">Not available via Claude MCP registry (verified). Manual GitHub Pages deploys remain the reliable workaround — store live URLs in the Demos tab above.</div>
-    </div>
-
-    <div class="section-label">Sales Motion</div>
-    <div class="rule-block">
-      <div class="rule-title">Pricing</div>
-      <div class="rule-body">$497 setup + $297/month. Setup fee never waived.</div>
-    </div>
-    <div class="rule-block">
-      <div class="rule-title">Close pattern</div>
-      <div class="rule-body">Free AI Trust Audit → personalized demo site → text the link → call 20-30 min later → close same day.</div>
-    </div>
-
-    <div class="section-label">Emergency-Tier Niches</div>
-    <div class="rule-body">Emergency vet, pet emergency transport, emergency HVAC, emergency plumbing, 24hr locksmith, emergency towing, storm/water damage restoration, urgent care/emergency dental, emergency pest control — always scraper priority.</div>
-  </div>
+<div class="stats">
+  <div class="stat"><div class="n" id="stat-new">–</div><div class="l">New</div></div>
+  <div class="stat"><div class="n" id="stat-demo">–</div><div class="l">Demo Ready</div></div>
+  <div class="stat"><div class="n" id="stat-warm">–</div><div class="l">Warm Leads</div></div>
 </div>
 
-<nav class="bottom" id="bottomNav"></nav>
+<div class="filters" id="pipeline-filters">
+  <div class="filter active" data-f="all">All</div>
+  <div class="filter" data-f="new">New</div>
+  <div class="filter" data-f="demo">Demo Ready</div>
+  <div class="filter" data-f="emergency">🚨 Emergency</div>
+</div>
+
+<div class="list" id="list"></div>
+<div class="list" id="warm-list" style="display:none;"></div>
+
+<nav>
+  <a href="#" class="active" data-view="pipeline">Pipeline</a>
+  <a href="#" data-view="warm">Warm Leads</a>
+</nav>
 
 <script>
-const TABS = [
-  { key: 'briefing', label: 'BRIEFING', title: 'Morning Briefing', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>` },
-  { key: 'scraper', label: 'SCRAPER', title: 'Scraper Feed', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-8.49a6 6 0 0 0 0 8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>` },
-  { key: 'demos', label: 'DEMOS', title: 'Demo Sites', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>` },
-  { key: 'pipeline', label: 'PIPELINE', title: 'Pipeline', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h6v4H3z"/></svg>` },
-  { key: 'reference', label: 'REF', title: 'Reference', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>` },
+const prospects = [
+  { name: "AWD Denver Automotive LLC", niche: "Auto Repair — S. Broadway", phone: "7203883880", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/awd-denver-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for AWD Denver Automotive. Check it out:" },
+  { name: "Wilmer's Detail Center", niche: "Auto Detailing — S. Broadway", phone: "7207917333", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/wilmers-detail-center/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Wilmer's Detail Center. Check it out:" },
+  { name: "Universal Auto Sale", niche: "Auto Sales — Englewood", phone: "7202200057", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/universal-auto-sale/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Universal Auto Sale. Check it out:" },
+  { name: "Jeff's Automotive", niche: "Auto Repair — S. Broadway", phone: "3034551264", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/jeffs-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Jeff's Automotive. Check it out:" },
+  { name: "Englewood Auto Repair & Body Shop", niche: "Auto Body — S. Broadway", phone: "3037613246", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/englewood-auto-repair/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Englewood Auto Repair. Check it out:" },
+  { name: "B&A Automotive", niche: "Auto Repair — S. Broadway", phone: "3039161649", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/ba-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for B&A Automotive. Check it out:" },
+  { name: "LG Automotive", niche: "Auto Repair — S. Broadway", phone: "3035477875", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/lg-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for LG Automotive. Check it out:" },
+  { name: "Emergency Plumbers Denver LLC", niche: "Emergency Plumbing — 24/7", phone: "7202158600", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/emergency-plumbers-denver/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Emergency Plumbers Denver. Check it out:" },
+  { name: "Sindibad Auto Sales", niche: "Auto Sales — Englewood", phone: "3035696394", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/sindibad-auto-sales/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Sindibad Auto Sales. Check it out:" },
+  { name: "Shaun's Automotive", niche: "Auto Repair — S. Broadway", phone: "3037837042", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/shauns-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Shaun's Automotive. Check it out:" },
+  { name: "iAuto", niche: "Auto Sales — Englewood", phone: "7207074177", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/iauto/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for iAuto. Check it out:" },
+  { name: "Maxwell Restoration", niche: "Restoration Services", phone: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/maxwell-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site I built for Maxwell Restoration:" },
+  { name: "Artful Aesthetic Medicine", niche: "Med Spa", phone: "3039013381", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/artful-aesthetic-medicine/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site for Artful Aesthetic Medicine:" }
 ];
 
-const nav = document.getElementById('bottomNav');
-TABS.forEach(t => {
-  const b = document.createElement('button');
-  b.innerHTML = t.icon + `<span>${t.label}</span>`;
-  b.onclick = () => switchTab(t.key);
-  b.id = 'nav-' + t.key;
-  nav.appendChild(b);
-});
+const warmLeads = [
+  { name: "Rick Guedes — Guedes Construction", niche: "Historical client · reactivation", phone: "7605596907", demo: "https://illins1.github.io/Elijah-os/rick-guedes/", smsBody: "Hey Rick — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
+  { name: "Jon — QCD Promos", niche: "Historical client · reactivation", phone: "3053088757", demo: "https://illins1.github.io/Elijah-os/qcd-promos/", smsBody: "Hey Jon — it's Elijah. Been a minute! Built you something to show what I've been up to:" }
+];
 
-function switchTab(key) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + key).classList.add('active');
-  document.querySelectorAll('nav.bottom button').forEach(b => b.classList.remove('active'));
-  document.getElementById('nav-' + key).classList.add('active');
-  document.getElementById('pageTitle').textContent = TABS.find(t => t.key === key).title;
-}
-switchTab('briefing');
+function statusLabel(s){ return {new:"New", contacted:"Contacted", demo:"Demo Ready"}[s] || s; }
 
-function toggleForm(id) {
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-// ---------- STORAGE HELPERS ----------
-async function loadKey(key, fallback) {
-  try {
-    const r = await window.storage.get(key);
-    return r && r.value ? JSON.parse(r.value) : fallback;
-  } catch (e) { return fallback; }
-}
-async function saveKey(key, value) {
-  try { await window.storage.set(key, JSON.stringify(value)); }
-  catch (e) { console.error('save failed', key, e); }
-}
-
-let warmLeads = [];
-let scraperLeads = [];
-let demoLinks = [];
-let pipeline = [];
-
-// ---------- WARM LEADS ----------
-function renderWarmLeads() {
-  const el = document.getElementById('warmLeadsList');
-  if (warmLeads.length === 0) {
-    el.innerHTML = `<div class="empty">No warm leads yet. Add Rick, James, or anyone else below — number, demo link, and pre-written text all live here for one-tap dialing.</div>`;
-    return;
-  }
-  el.innerHTML = warmLeads.map((l, i) => `
-    <div class="card lead-card">
-      <div class="lead-name">${esc(l.name)}</div>
-      <div class="lead-sub">${esc(l.business || '')}</div>
-      <div class="btn-row">
-        ${l.phone ? `<a class="btn btn-call" href="tel:${esc(l.phone)}">Call</a>` : `<span class="btn btn-call" style="opacity:.4">No number</span>`}
-        ${l.phone ? `<a class="btn btn-text" href="sms:${esc(l.phone)}${l.sms ? '?&body=' + encodeURIComponent(l.sms) : ''}">Text</a>` : ''}
-      </div>
-      ${l.demo ? `<div class="btn-row"><a class="btn btn-demo" href="${esc(l.demo)}" target="_blank">Open demo</a></div>` : ''}
-      <div class="row-actions"><button class="btn-ghost" onclick="removeWarmLead(${i})">Remove</button></div>
-    </div>
-  `).join('');
-}
-async function saveWarmLead() {
-  const name = document.getElementById('wl-name').value.trim();
-  if (!name) return;
-  warmLeads.unshift({
-    name,
-    business: document.getElementById('wl-business').value.trim(),
-    phone: document.getElementById('wl-phone').value.trim(),
-    demo: document.getElementById('wl-demo').value.trim(),
-    sms: document.getElementById('wl-sms').value.trim(),
-  });
-  await saveKey('cc:warmleads', warmLeads);
-  renderWarmLeads();
-  ['wl-name','wl-business','wl-phone','wl-demo','wl-sms'].forEach(id => document.getElementById(id).value = '');
-}
-async function removeWarmLead(i) {
-  warmLeads.splice(i, 1);
-  await saveKey('cc:warmleads', warmLeads);
-  renderWarmLeads();
-}
-
-// ---------- SCRAPER ----------
-const EMERGENCY_NICHES = ['emergency vet','pet emergency transport','emergency hvac','emergency plumbing','24hr locksmith','emergency towing','storm damage restoration','water damage restoration','urgent care','emergency dental','emergency pest control'];
-function isEmergency(l) {
-  if (l.emergency === 'yes') return true;
-  const n = (l.niche || '').toLowerCase();
-  return EMERGENCY_NICHES.some(e => n.includes(e.split(' ')[0]));
-}
-function renderScraper() {
-  const emEl = document.getElementById('scraperEmergency');
-  const allEl = document.getElementById('scraperList');
-  const emergency = scraperLeads.filter(isEmergency);
-  const rest = scraperLeads.filter(l => !isEmergency(l));
-
-  emEl.innerHTML = emergency.length === 0
-    ? `<div class="empty">No emergency-tier leads in the feed yet.</div>`
-    : emergency.map((l, i) => leadCard(l, scraperLeads.indexOf(l), true)).join('');
-
-  allEl.innerHTML = rest.length === 0
-    ? `<div class="empty">Feed's clear. Add leads manually below until the live scraper is wired in.</div>`
-    : rest.map((l) => leadCard(l, scraperLeads.indexOf(l), false)).join('');
-}
-function leadCard(l, idx, emergency) {
+function cardHtml(p, isWarm){
+  const smsHref = p.phone ? `sms:${p.phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(p.smsBody + (p.demo ? ' ' + p.demo : ''))}` : '#';
+  const callHref = p.phone ? `tel:${p.phone}` : '#';
+  const statusClass = isWarm ? 'warm' : (p.emergency ? 'emergency' : p.status);
+  const statusText = isWarm ? 'Warm Lead' : (p.emergency ? '🚨 Emergency' : statusLabel(p.status));
   return `
-    <div class="card" style="border-left:3px solid ${emergency ? 'var(--alert)' : 'var(--local)'}">
-      <div class="lead-scraper">
+    <div class="card ${p.emergency ? 'emergency' : ''}">
+      <div class="card-top">
         <div>
-          <div class="lead-name" style="font-size:14.5px">${esc(l.name)}</div>
-          <div class="lead-sub">${esc(l.niche || '')}</div>
+          <div class="biz-name">${p.name}</div>
+          <div class="niche">${p.niche}</div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
-          ${emergency ? '<span class="pill pill-emergency">EMERGENCY</span>' : ''}
-          <span class="pill ${l.track === 'FLAGSHIPS' ? 'pill-flag' : 'pill-local'}">${l.track}</span>
-        </div>
+        <div class="status ${statusClass}">${statusText}</div>
       </div>
-      <div class="row-actions">
-        ${l.phone ? `<a class="btn btn-call" style="flex:none;padding:0 14px;" href="tel:${esc(l.phone)}">Call</a>` : ''}
-        <button class="btn-ghost" onclick="removeScraperLead(${idx})">Remove</button>
+      <div class="card-actions">
+        <a class="btn call" href="${callHref}">📞<span>${p.phone ? 'Call' : 'No #'}</span></a>
+        <a class="btn text" href="${smsHref}">💬<span>Text</span></a>
+        ${p.demo ? `<a class="btn demo" href="${p.demo}" target="_blank">🔗<span>Demo</span></a>` : `<div class="btn demo" style="opacity:.35">🔗<span>No demo</span></div>`}
       </div>
     </div>`;
 }
-async function saveScraperLead() {
-  const name = document.getElementById('sc-name').value.trim();
-  if (!name) return;
-  scraperLeads.unshift({
-    name,
-    niche: document.getElementById('sc-niche').value.trim(),
-    track: document.getElementById('sc-track').value,
-    emergency: document.getElementById('sc-emergency').value,
-    phone: document.getElementById('sc-phone').value.trim(),
+
+function render(filter){
+  const list = document.getElementById('list');
+  let filtered = prospects;
+  if (filter === 'emergency') filtered = prospects.filter(p => p.emergency);
+  else if (filter !== 'all') filtered = prospects.filter(p => p.status === filter);
+  list.innerHTML = filtered.map(p => cardHtml(p, false)).join('');
+  document.getElementById('stat-new').textContent = prospects.filter(p=>p.status==='new').length;
+  document.getElementById('stat-demo').textContent = prospects.filter(p=>p.demo).length;
+  document.getElementById('stat-warm').textContent = warmLeads.length;
+}
+
+function renderWarm(){
+  document.getElementById('warm-list').innerHTML = warmLeads.map(p => cardHtml(p, true)).join('');
+}
+
+document.querySelectorAll('.filter').forEach(f => {
+  f.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));
+    f.classList.add('active');
+    render(f.dataset.f);
   });
-  await saveKey('cc:scraper', scraperLeads);
-  renderScraper();
-  ['sc-name','sc-niche','sc-phone'].forEach(id => document.getElementById(id).value = '');
-  toggleForm('scraperForm');
-}
-async function removeScraperLead(i) {
-  scraperLeads.splice(i, 1);
-  await saveKey('cc:scraper', scraperLeads);
-  renderScraper();
-}
+});
 
-// ---------- DEMOS ----------
-function renderDemos() {
-  const el = document.getElementById('demosCard');
-  if (demoLinks.length === 0) {
-    el.innerHTML = `<div class="empty">No demo links saved yet. Once niche sites are live on GitHub Pages, save the links here so they're one tap away on calls.</div>`;
-    return;
-  }
-  el.innerHTML = demoLinks.map((d, i) => `
-    <div class="link-row">
-      <div>
-        <div class="niche-name">${esc(d.niche)}</div>
-        <div class="${d.url ? 'status-open' : 'status-empty'}">${d.url ? 'LIVE' : 'PENDING'}</div>
-      </div>
-      <div style="display:flex; gap:6px;">
-        ${d.url ? `<a class="btn btn-demo" style="min-height:36px; padding:0 12px;" href="${esc(d.url)}" target="_blank">Open</a>` : ''}
-        <button class="del-btn" onclick="removeDemo(${i})">✕</button>
-      </div>
-    </div>
-  `).join('');
-}
-async function saveDemo() {
-  const niche = document.getElementById('dm-niche').value.trim();
-  if (!niche) return;
-  demoLinks.unshift({ niche, url: document.getElementById('dm-url').value.trim() });
-  await saveKey('cc:demos', demoLinks);
-  renderDemos();
-  ['dm-niche','dm-url'].forEach(id => document.getElementById(id).value = '');
-}
-async function removeDemo(i) {
-  demoLinks.splice(i, 1);
-  await saveKey('cc:demos', demoLinks);
-  renderDemos();
-}
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    const view = a.dataset.view;
+    document.getElementById('list').style.display = view === 'pipeline' ? '' : 'none';
+    document.getElementById('warm-list').style.display = view === 'warm' ? '' : 'none';
+    document.getElementById('pipeline-filters').style.display = view === 'pipeline' ? 'flex' : 'none';
+  });
+});
 
-// ---------- PIPELINE ----------
-const STAGES = [
-  { key: 'New', color: '#8B9199' },
-  { key: 'Contacted', color: '#3FA796' },
-  { key: 'Demo Sent', color: '#C97B4A' },
-  { key: 'Discovery Call', color: '#D9484B' },
-  { key: 'Closed', color: '#E8E6DF' },
-];
-function renderPipeline() {
-  const el = document.getElementById('pipelineBoard');
-  if (pipeline.length === 0) {
-    el.innerHTML = `<div class="empty">Pipeline's empty. Add prospects below and move them through stages as you work them.</div>`;
-    return;
-  }
-  el.innerHTML = STAGES.map(s => {
-    const items = pipeline.filter(p => p.stage === s.key);
-    return `
-      <div class="stage-col">
-        <div class="stage-head">
-          <span class="stage-dot" style="background:${s.color}"></span>
-          <span class="mono" style="font-size:12px; letter-spacing:.08em; color:${s.color}; font-weight:700;">${s.key.toUpperCase()}</span>
-          <span style="font-size:11px; color:var(--dim)">(${items.length})</span>
-        </div>
-        ${items.length === 0 ? '' : items.map((p) => `
-          <div class="card" style="padding:10px 12px; margin-bottom:8px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-              <div style="font-weight:600; font-size:13.5px;">${esc(p.name)}</div>
-              <button class="del-btn" onclick="removePipeline(${pipeline.indexOf(p)})">✕</button>
-            </div>
-            <select onchange="movePipeline(${pipeline.indexOf(p)}, this.value)" style="margin-top:8px; font-size:12px; min-height:36px;">
-              ${STAGES.map(st => `<option value="${st.key}" ${st.key === p.stage ? 'selected' : ''}>${st.key}</option>`).join('')}
-            </select>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }).join('');
-}
-async function savePipeline() {
-  const name = document.getElementById('pl-name').value.trim();
-  if (!name) return;
-  pipeline.unshift({ name, stage: document.getElementById('pl-stage').value });
-  await saveKey('cc:pipeline', pipeline);
-  renderPipeline();
-  document.getElementById('pl-name').value = '';
-  toggleForm('pipelineForm');
-}
-async function movePipeline(i, stage) {
-  pipeline[i].stage = stage;
-  await saveKey('cc:pipeline', pipeline);
-  renderPipeline();
-}
-async function removePipeline(i) {
-  pipeline.splice(i, 1);
-  await saveKey('cc:pipeline', pipeline);
-  renderPipeline();
-}
-
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
-}
-
-// ---------- INIT ----------
-(async () => {
-  warmLeads = await loadKey('cc:warmleads', []);
-  scraperLeads = await loadKey('cc:scraper', []);
-  demoLinks = await loadKey('cc:demos', []);
-  pipeline = await loadKey('cc:pipeline', []);
-  renderWarmLeads();
-  renderScraper();
-  renderDemos();
-  renderPipeline();
-})();
+render('all');
+renderWarm();
 </script>
+
 </body>
 </html>
