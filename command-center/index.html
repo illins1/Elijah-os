@@ -110,7 +110,7 @@ function statusLabel(s){ return {new:"New", contacted:"Contacted", demo:"Demo Re
 function cardHtml(p, isWarm){
   const smsHref = p.phone ? `sms:${p.phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(p.smsBody + (p.demo ? ' ' + p.demo : ''))}` : '#';
   const callHref = p.phone ? `tel:${p.phone}` : '#';
-  const emailHref = p.email ? `mailto:${p.email}?subject=${encodeURIComponent('Free AI visibility audit + demo site for ' + p.name)}&body=${encodeURIComponent(p.smsBody + (p.demo ? '\n\n' + p.demo : '') + '\n\n— Elijah, Mile High AI')}` : '#';
+  const emailHref = p.email ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.email)}&su=${encodeURIComponent('Free AI visibility audit + demo site for ' + p.name)}&body=${encodeURIComponent(p.smsBody + (p.demo ? '\n\n' + p.demo : '') + '\n\n— Elijah, Mile High AI')}&authuser=creationandthings@gmail.com` : '#';
   const statusClass = isWarm ? 'warm' : (p.emergency ? 'emergency' : p.status);
   const statusText = isWarm ? 'Warm Lead' : (p.emergency ? '🚨 Emergency' : statusLabel(p.status));
   return `
