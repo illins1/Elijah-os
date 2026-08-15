@@ -3,76 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artful Aesthetic Medicine — AI Visibility Snapshot</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Artful Aesthetic Medicine | AI-Powered Web Presence</title>
 <style>
-  :root{ --bg:#100E12; --card:#1A1720; --border:#2A2530; --gold:#D9A441; --text:#F2EEF4; --muted:#9B93A3; --green:#4CAF6D; --rose:#C97C93; }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  body{margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; max-width:430px; margin:0 auto;}
-  .hero{padding:36px 20px 28px; text-align:center; border-bottom:1px solid var(--border);}
-  .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;}
-  h1{font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:30px; margin:8px 0 4px;}
-  .sub{color:var(--muted); font-size:14px; line-height:1.5;}
-  .pulse-wrap{margin:22px auto 0; width:64px; height:64px; position:relative;}
-  .pulse{position:absolute; inset:0; border-radius:50%; background:var(--gold); opacity:.25; animation:pulse 2s infinite;}
-  .pulse-core{position:absolute; inset:14px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-size:20px;}
-  @keyframes pulse{0%{transform:scale(1); opacity:.35;}70%{transform:scale(2.1); opacity:0;}100%{opacity:0;}}
-  .section{padding:26px 20px; border-bottom:1px solid var(--border);}
-  .section h2{font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; margin:0 0 14px;}
-  .score-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
-  .score{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 8px; text-align:center;}
-  .score .n{font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; color:#E3584B;}
-  .score .l{font-size:10px; color:var(--muted); text-transform:uppercase; margin-top:2px;}
-  .list{list-style:none; padding:0; margin:0;}
-  .list li{display:flex; gap:10px; padding:10px 0; font-size:14px; border-bottom:1px solid var(--border);}
-  .list li:last-child{border:none;}
-  .check{color:var(--green); font-weight:800;}
-  .cross{color:#E3584B; font-weight:800;}
-  .miss-call{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px;}
-  .miss-call .n{font-family:'Barlow Condensed',sans-serif; font-size:26px; color:var(--gold); font-weight:800;}
-  .cta{padding:26px 20px 40px; text-align:center;}
-  .btn{display:block; width:100%; padding:16px; border-radius:14px; font-weight:700; font-size:15px; text-decoration:none; margin-bottom:10px;}
-  .btn.primary{background:var(--gold); color:#241a05;}
-  .btn.secondary{background:transparent; border:1px solid var(--border); color:var(--text);}
-  .price{color:var(--muted); font-size:12px; margin-top:10px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background:#0d0d0f; color:#f2f2f2; max-width:430px; margin:0 auto;
+    min-height:100vh; padding-bottom:90px;
+  }
+  header {
+    padding:22px 20px 18px; background:linear-gradient(135deg,#3a1f2e,#1f1420);
+    position:sticky; top:0; z-index:20;
+  }
+  header h1 { font-size:20px; font-weight:700; letter-spacing:.3px; }
+  header p { font-size:12.5px; opacity:.85; margin-top:3px; }
+  .badge {
+    display:inline-block; margin-top:10px; background:rgba(255,255,255,.18);
+    padding:5px 10px; border-radius:20px; font-size:11px; font-weight:600;
+  }
+  .hero { padding:26px 20px 10px; }
+  .hero h2 { font-size:22px; line-height:1.3; font-weight:700; }
+  .hero .accent { color:#e8a2c4; }
+  .hero p { margin-top:10px; font-size:14px; color:#b8b8bd; line-height:1.5; }
+  .cta-row { display:flex; gap:10px; margin-top:18px; }
+  .btn {
+    flex:1; padding:14px 10px; border-radius:12px; font-size:14.5px;
+    font-weight:700; text-align:center; border:none; min-height:44px;
+    text-decoration:none; display:flex; align-items:center; justify-content:center;
+  }
+  .btn-primary { background:#e8a2c4; color:#0d0d0f; }
+  .btn-secondary { background:#1c1c20; color:#f2f2f2; border:1px solid #2e2e33; }
+  section { padding:22px 20px; border-top:1px solid #1c1c20; }
+  section h3 { font-size:16.5px; font-weight:700; margin-bottom:14px; }
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .stat-card { background:#151517; border:1px solid #232327; border-radius:14px; padding:14px; }
+  .stat-num { font-size:24px; font-weight:800; color:#e8a2c4; }
+  .stat-label { font-size:11.5px; color:#93939a; margin-top:4px; line-height:1.35; }
+  .check-list { list-style:none; }
+  .check-list li {
+    display:flex; gap:10px; align-items:flex-start; padding:10px 0;
+    border-bottom:1px solid #1c1c20; font-size:14px; color:#dcdce0;
+  }
+  .check-list li:last-child { border-bottom:none; }
+  .check-icon {
+    width:20px; height:20px; border-radius:50%; background:#e8a2c4;
+    color:#0d0d0f; flex-shrink:0; display:flex; align-items:center;
+    justify-content:center; font-size:12px; font-weight:800; margin-top:1px;
+  }
+  .miss-call {
+    background:#151517; border:1px solid #e8a2c444; border-radius:16px; padding:18px;
+  }
+  .miss-call h4 { font-size:15px; color:#e8a2c4; margin-bottom:8px; font-weight:700; }
+  .miss-call p { font-size:13.5px; color:#c2c2c7; line-height:1.5; }
+  .price-card {
+    background:linear-gradient(135deg,#151517,#1a1a1d); border:1px solid #2a2a2f;
+    border-radius:16px; padding:20px; text-align:center;
+  }
+  .price-card .amt { font-size:30px; font-weight:800; color:#e8a2c4; }
+  .price-card .sub { font-size:12.5px; color:#93939a; margin-top:4px; }
+  .price-card .then { font-size:13px; color:#c2c2c7; margin-top:10px; }
+  footer { padding:24px 20px 30px; text-align:center; font-size:11.5px; color:#6b6b70; }
+  .widget {
+    position:fixed; bottom:18px; right:18px; max-width:430px; margin:0 auto;
+  }
+  .widget-btn {
+    width:58px; height:58px; border-radius:50%; background:#e8a2c4;
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+    box-shadow:0 4px 18px #e8a2c466; animation:pulse 2.2s infinite; border:none; cursor:pointer;
+  }
+  @keyframes pulse {
+    0% { box-shadow:0 0 0 0 #e8a2c455; }
+    70% { box-shadow:0 0 0 16px #e8a2c400; }
+    100% { box-shadow:0 0 0 0 #e8a2c400; }
+  }
+  .bottom-nav {
+    position:fixed; bottom:0; left:0; right:0; max-width:430px; margin:0 auto;
+    background:#141416; border-top:1px solid #232327; display:flex;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+  .bottom-nav a {
+    flex:1; text-align:center; font-size:12px; color:#c9c9cd; text-decoration:none;
+    display:flex; flex-direction:column; align-items:center; gap:4px; min-height:44px; justify-content:center;
+  }
+  .bottom-nav a.primary { color:#e8a2c4; font-weight:700; }
 </style>
 </head>
 <body>
-<div class="hero">
-  <div class="tag">Free AI Visibility Snapshot</div>
+
+<header>
   <h1>Artful Aesthetic Medicine</h1>
-  <div class="sub">Built for you by Mile High AI — here's how you show up to AI search right now.</div>
-  <div class="pulse-wrap"><div class="pulse"></div><div class="pulse-core">✨</div></div>
-</div>
-<div class="section">
-  <h2>Your AI Visibility Score</h2>
-  <div class="score-grid">
-    <div class="score"><div class="n">2/10</div><div class="l">Google AI</div></div>
-    <div class="score"><div class="n">1/10</div><div class="l">ChatGPT</div></div>
-    <div class="score"><div class="n">4/10</div><div class="l">Reviews</div></div>
+  <p>Med Spa & Aesthetic Medicine</p>
+  <span class="badge">🤖 AI Visibility Demo — Built by Mile High AI</span>
+</header>
+
+<div class="hero">
+  <h2>Is your business showing up when AI <span class="accent">recommends</span> med spas in Denver?</h2>
+  <p>We ran an AI Trust Audit on Artful Aesthetic Medicine across ChatGPT, Google AI Overviews, and 4 other engines. Here's what we found — and how we fix it.</p>
+  <div class="cta-row">
+    <a href="tel:+13039013381" class="btn btn-primary">📞 Call Now</a>
+    <a href="sms:+13039013381" class="btn btn-secondary">💬 Text Us</a>
   </div>
 </div>
-<div class="section">
-  <h2>What's costing you bookings</h2>
-  <ul class="list">
-    <li><span class="cross">✕</span> AI assistants can't find your treatment menu or pricing</li>
-    <li><span class="cross">✕</span> After-hours consult requests go unanswered until morning</li>
-    <li><span class="cross">✕</span> New patient reviews aren't being requested consistently</li>
-    <li><span class="check">✓</span> Strong before/after portfolio — just not indexed for AI search</li>
+
+<section>
+  <h3>Your AI Visibility Audit</h3>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-num">41</div><div class="stat-label">AI Trust Score (out of 100)</div></div>
+    <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">Map Pack citation gaps found</div></div>
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Competitors AI recommends first</div></div>
+    <div class="stat-card"><div class="stat-num">18</div><div class="stat-label">Missed calls / month (est.)</div></div>
+  </div>
+</section>
+
+<section>
+  <h3>What's Included</h3>
+  <ul class="check-list">
+    <li><span class="check-icon">✓</span> AI-optimized website built for Artful Aesthetic Medicine</li>
+    <li><span class="check-icon">✓</span> Google Business Profile fully optimized</li>
+    <li><span class="check-icon">✓</span> Listed correctly across 50+ directories</li>
+    <li><span class="check-icon">✓</span> 24/7 AI voice + chat receptionist</li>
+    <li><span class="check-icon">✓</span> Missed-call text-back automation</li>
+    <li><span class="check-icon">✓</span> Monthly AI visibility report</li>
   </ul>
-</div>
-<div class="section">
-  <h2>Never miss a consult</h2>
+</section>
+
+<section>
   <div class="miss-call">
-    <div class="n">24/7</div>
-    <div style="font-size:13px; color:var(--muted); margin-top:4px;">AI answers questions, books consults, and follows up with new patients automatically — even at 9pm on a Friday.</div>
+    <h4>Never Miss A Call Again</h4>
+    <p>Every missed call is a customer calling the med spa down the street. Our AI answers instantly, books the job, and texts you the details — even at 2am.</p>
   </div>
+</section>
+
+<section>
+  <h3>Simple Pricing</h3>
+  <div class="price-card">
+    <div class="amt">$497</div>
+    <div class="sub">one-time setup</div>
+    <div class="then">then $297/month — website, AI receptionist, visibility monitoring & reporting</div>
+  </div>
+</section>
+
+<footer>
+  Demo built for Artful Aesthetic Medicine by Mile High AI · Denver, CO<br>
+  This is a preview — call to activate your real site.
+</footer>
+
+<div class="widget">
+  <button class="widget-btn" onclick="alert('AI receptionist demo — this would launch a live voice/chat widget on the real site.')">🎙️</button>
 </div>
-<div class="cta">
-  <a class="btn primary" href="sms:7205398397">Text Elijah — See It Live</a>
-  <a class="btn secondary" href="tel:7205398397">Call Elijah</a>
-  <div class="price">Setup $497 · $297/mo — no contract</div>
+
+<div class="bottom-nav">
+  <a href="tel:+13039013381" class="primary">📞<br>Call</a>
+  <a href="sms:+13039013381">💬<br>Text</a>
+  <a href="#" onclick="alert('Full AI audit report would open here.')">📊<br>Audit</a>
 </div>
+
 </body>
 </html>
