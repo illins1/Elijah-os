@@ -38,7 +38,8 @@
   .status.demo{ background:rgba(76,175,109,.15); color:var(--green); }
   .status.warm{ background:rgba(199,124,147,.15); color:#c97c93; }
   .status.emergency{ background:rgba(227,88,75,.18); color:var(--red); }
-  .card-actions{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px; }
+  .card-actions{ display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; margin-top:14px; }
+  .btn.email{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
   .btn{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:12px 4px; border-radius:12px; text-decoration:none; font-size:11px; font-weight:700; min-height:44px; border:1px solid var(--card-border); color:var(--text); }
   .btn.call{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
   .btn.text{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
@@ -79,29 +80,29 @@
 
 <script>
 const prospects = [
-  { name: "AWD Denver Automotive LLC", niche: "Auto Repair — S. Broadway", phone: "7203883880", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/awd-denver-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for AWD Denver Automotive. Check it out:" },
-  { name: "Wilmer's Detail Center", niche: "Auto Detailing — S. Broadway", phone: "7207917333", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/wilmers-detail-center/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Wilmer's Detail Center. Check it out:" },
-  { name: "Universal Auto Sale", niche: "Auto Sales — Englewood", phone: "7202200057", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/universal-auto-sale/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Universal Auto Sale. Check it out:" },
-  { name: "Jeff's Automotive", niche: "Auto Repair — S. Broadway", phone: "3034551264", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/jeffs-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Jeff's Automotive. Check it out:" },
-  { name: "Englewood Auto Repair & Body Shop", niche: "Auto Body — S. Broadway", phone: "3037613246", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/englewood-auto-repair/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Englewood Auto Repair. Check it out:" },
-  { name: "B&A Automotive", niche: "Auto Repair — S. Broadway", phone: "3039161649", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/ba-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for B&A Automotive. Check it out:" },
-  { name: "LG Automotive", niche: "Auto Repair — S. Broadway", phone: "3035477875", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/lg-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for LG Automotive. Check it out:" },
-  { name: "Emergency Plumbers Denver LLC", niche: "Emergency Plumbing — 24/7", phone: "7202158600", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/emergency-plumbers-denver/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Emergency Plumbers Denver. Check it out:" },
-  { name: "Sindibad Auto Sales", niche: "Auto Sales — Englewood", phone: "3035696394", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/sindibad-auto-sales/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Sindibad Auto Sales. Check it out:" },
-  { name: "Shaun's Automotive", niche: "Auto Repair — S. Broadway", phone: "3037837042", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/shauns-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Shaun's Automotive. Check it out:" },
-  { name: "iAuto", niche: "Auto Sales — Englewood", phone: "7207074177", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/iauto/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for iAuto. Check it out:" },
-  { name: "Maxwell Restoration", niche: "Restoration Services", phone: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/maxwell-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site I built for Maxwell Restoration:" },
-  { name: "Artful Aesthetic Medicine", niche: "Med Spa", phone: "3039013381", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/artful-aesthetic-medicine/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site for Artful Aesthetic Medicine:" },
-  { name: "Old School PDR", niche: "Mobile Hail/PDR — Englewood", phone: "7204456211", status: "demo", emergency:true, demo: "https://illins1.github.io/Elijah-os/old-school-pdr/", smsBody: "Hey Javier, this is Elijah with Mile High AI — local to South Denver. With this week's hail I put together a private mobile-booking page concept for Old School PDR so customers can call/text you directly while you're out on jobs:" },
-  { name: "[Roofing Prospect — TBD]", niche: "Hail/Storm Roofing Template", phone: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-roofing/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
-  { name: "[Auto Hail Prospect — TBD]", niche: "Hail/Storm Auto-PDR Template", phone: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-auto-pdr/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
-  { name: "[Restoration Prospect — TBD]", niche: "Hail/Storm Restoration Template", phone: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" }
+  { name: "AWD Denver Automotive LLC", niche: "Auto Repair — S. Broadway", phone: "7203883880", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/awd-denver-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for AWD Denver Automotive. Check it out:" },
+  { name: "Wilmer's Detail Center", niche: "Auto Detailing — S. Broadway", phone: "7207917333", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/wilmers-detail-center/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Wilmer's Detail Center. Check it out:" },
+  { name: "Universal Auto Sale", niche: "Auto Sales — Englewood", phone: "7202200057", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/universal-auto-sale/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Universal Auto Sale. Check it out:" },
+  { name: "Jeff's Automotive", niche: "Auto Repair — S. Broadway", phone: "3034551264", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/jeffs-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Jeff's Automotive. Check it out:" },
+  { name: "Englewood Auto Repair & Body Shop", niche: "Auto Body — S. Broadway", phone: "3037613246", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/englewood-auto-repair/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Englewood Auto Repair. Check it out:" },
+  { name: "B&A Automotive", niche: "Auto Repair — S. Broadway", phone: "3039161649", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/ba-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for B&A Automotive. Check it out:" },
+  { name: "LG Automotive", niche: "Auto Repair — S. Broadway", phone: "3035477875", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/lg-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for LG Automotive. Check it out:" },
+  { name: "Emergency Plumbers Denver LLC", niche: "Emergency Plumbing — 24/7", phone: "7202158600", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/emergency-plumbers-denver/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Emergency Plumbers Denver. Check it out:" },
+  { name: "Sindibad Auto Sales", niche: "Auto Sales — Englewood", phone: "3035696394", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/sindibad-auto-sales/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Sindibad Auto Sales. Check it out:" },
+  { name: "Shaun's Automotive", niche: "Auto Repair — S. Broadway", phone: "3037837042", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/shauns-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Shaun's Automotive. Check it out:" },
+  { name: "iAuto", niche: "Auto Sales — Englewood", phone: "7207074177", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/iauto/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for iAuto. Check it out:" },
+  { name: "Maxwell Restoration", niche: "Restoration Services", phone: "", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/maxwell-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site I built for Maxwell Restoration:" },
+  { name: "Artful Aesthetic Medicine", niche: "Med Spa", phone: "3039013381", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/artful-aesthetic-medicine/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site for Artful Aesthetic Medicine:" },
+  { name: "Old School PDR", niche: "Mobile Hail/PDR — Englewood", phone: "7204456211", email: "", status: "demo", emergency:true, demo: "https://illins1.github.io/Elijah-os/old-school-pdr/", smsBody: "Hey Javier, this is Elijah with Mile High AI — local to South Denver. With this week's hail I put together a private mobile-booking page concept for Old School PDR so customers can call/text you directly while you're out on jobs:" },
+  { name: "[Roofing Prospect — TBD]", niche: "Hail/Storm Roofing Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-roofing/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
+  { name: "[Auto Hail Prospect — TBD]", niche: "Hail/Storm Auto-PDR Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-auto-pdr/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
+  { name: "[Restoration Prospect — TBD]", niche: "Hail/Storm Restoration Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" }
 ];
 
 const warmLeads = [
-  { name: "Rick Guedes — Guedes Construction", niche: "Historical client · reactivation", phone: "7605596907", demo: "https://illins1.github.io/Elijah-os/rick-guedes/", smsBody: "Hey Rick — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
-  { name: "Jon — QCD Promos", niche: "Historical client · reactivation", phone: "3053088757", demo: "https://illins1.github.io/Elijah-os/qcd-promos/", smsBody: "Hey Jon — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
-  { name: "James Epstein — Marnex Products", niche: "Promotional Products · Cleveland, OH · Historical client", phone: "", demo: "", smsBody: "Hey James — it's Elijah. Been a minute! Built you something to show what I've been up to:" }
+  { name: "Rick Guedes — Guedes Construction", niche: "Historical client · reactivation", phone: "7605596907", email: "rick@guedesconstruction.com", demo: "https://illins1.github.io/Elijah-os/rick-guedes/", smsBody: "Hey Rick — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
+  { name: "Jon — QCD Promos", niche: "Historical client · reactivation", phone: "3053088757", email: "", demo: "https://illins1.github.io/Elijah-os/qcd-promos/", smsBody: "Hey Jon — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
+  { name: "James Epstein — Marnex Products", niche: "Promotional Products · Cleveland, OH · Historical client", phone: "", email: "", demo: "", smsBody: "Hey James — it's Elijah. Been a minute! Built you something to show what I've been up to:" }
 ];
 
 function statusLabel(s){ return {new:"New", contacted:"Contacted", demo:"Demo Ready"}[s] || s; }
@@ -109,6 +110,7 @@ function statusLabel(s){ return {new:"New", contacted:"Contacted", demo:"Demo Re
 function cardHtml(p, isWarm){
   const smsHref = p.phone ? `sms:${p.phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(p.smsBody + (p.demo ? ' ' + p.demo : ''))}` : '#';
   const callHref = p.phone ? `tel:${p.phone}` : '#';
+  const emailHref = p.email ? `mailto:${p.email}?subject=${encodeURIComponent('Free AI visibility audit + demo site for ' + p.name)}&body=${encodeURIComponent(p.smsBody + (p.demo ? '\n\n' + p.demo : '') + '\n\n— Elijah, Mile High AI')}` : '#';
   const statusClass = isWarm ? 'warm' : (p.emergency ? 'emergency' : p.status);
   const statusText = isWarm ? 'Warm Lead' : (p.emergency ? '🚨 Emergency' : statusLabel(p.status));
   return `
@@ -123,6 +125,7 @@ function cardHtml(p, isWarm){
       <div class="card-actions">
         <a class="btn call" href="${callHref}">📞<span>${p.phone ? 'Call' : 'No #'}</span></a>
         <a class="btn text" href="${smsHref}">💬<span>Text</span></a>
+        <a class="btn email" href="${emailHref}" style="${p.email ? '' : 'opacity:.35;pointer-events:none;'}">✉️<span>${p.email ? 'Email' : 'No email'}</span></a>
         ${p.demo ? `<a class="btn demo" href="${p.demo}" target="_blank">🔗<span>Demo</span></a>` : `<div class="btn demo" style="opacity:.35">🔗<span>No demo</span></div>`}
       </div>
     </div>`;
