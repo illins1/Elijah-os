@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dentagon Auto Hail Repair | Never Miss A Storm Call</title>
+<style>
+  :root{
+    --sky-dark:#12181f;
+    --sky-panel:#1a2230;
+    --sky-panel-2:#212b3b;
+    --steel:#5c7188;
+    --fog:#8fa1b3;
+    --white:#f3f6f9;
+    --impact:#ff6a2b;
+    --impact-2:#ffb020;
+    --safe-green:#3ecf8e;
+    --line: rgba(143,161,179,0.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--sky-dark);
+    color:var(--white);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:84px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    letter-spacing:-0.02em;
+    line-height:1.02;
+    text-transform:uppercase;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 20px;}
+
+  /* ---- STORM TICKER (signature element) ---- */
+  .ticker{
+    background:linear-gradient(90deg,#3a1b0d,#241108);
+    border-bottom:1px solid rgba(255,106,43,0.35);
+    padding:9px 0;
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker-inner{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    color:var(--impact-2);
+    animation:none;
+  }
+  .dot-live{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--impact);
+    box-shadow:0 0 0 rgba(255,106,43,0.6);
+    animation:pulse-dot 1.6s infinite;
+    flex-shrink:0;
+  }
+  @keyframes pulse-dot{
+    0%{box-shadow:0 0 0 0 rgba(255,106,43,0.55);}
+    70%{box-shadow:0 0 0 8px rgba(255,106,43,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,106,43,0);}
+  }
+
+  /* ---- NAV ---- */
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+  }
+  .logo{font-size:15px;font-weight:800;letter-spacing:0.02em;}
+  .logo span{color:var(--impact);}
+  .nav-badge{
+    font-size:10.5px;font-weight:700;color:var(--fog);
+    border:1px solid var(--line);border-radius:20px;
+    padding:5px 10px;letter-spacing:0.04em;
+  }
+
+  /* ---- HERO ---- */
+  .hero{padding:14px 0 30px;position:relative;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(255,106,43,0.1);
+    border:1px solid rgba(255,106,43,0.3);
+    color:var(--impact-2);
+    font-size:11.5px;font-weight:700;letter-spacing:0.04em;
+    padding:6px 12px;border-radius:20px;margin-bottom:18px;
+  }
+  .hero h1{font-size:40px;margin-bottom:14px;}
+  .hero h1 em{
+    font-style:normal;color:var(--impact);
+    display:block;
+  }
+  .hero p{
+    color:var(--fog);font-size:15.5px;line-height:1.55;
+    max-width:420px;margin-bottom:22px;
+  }
+  .hero-ctas{display:flex;flex-direction:column;gap:10px;}
+  .btn-primary{
+    background:var(--impact);color:#1a0d05;
+    font-weight:800;text-align:center;
+    padding:16px 18px;border-radius:12px;font-size:15.5px;
+    letter-spacing:0.01em;
+    box-shadow:0 8px 24px rgba(255,106,43,0.25);
+  }
+  .btn-secondary{
+    border:1px solid var(--line);color:var(--white);
+    text-align:center;padding:15px 18px;border-radius:12px;
+    font-size:14.5px;font-weight:600;
+  }
+
+  /* hail impact visual */
+  .impact-visual{
+    margin:26px 0 6px;height:150px;position:relative;
+    border-radius:16px;overflow:hidden;
+    background:radial-gradient(circle at 30% 30%, #1f2a3a, #12181f 70%);
+    border:1px solid var(--line);
+  }
+  .impact-visual svg{position:absolute;inset:0;width:100%;height:100%;}
+
+  /* ---- SECTION LABEL ---- */
+  .section{padding:34px 0;border-top:1px solid var(--line);}
+  .eyebrow-label{
+    font-size:11px;font-weight:800;letter-spacing:0.12em;
+    color:var(--impact);text-transform:uppercase;margin-bottom:8px;
+  }
+  .section h2{font-size:25px;margin-bottom:10px;}
+  .section-sub{color:var(--fog);font-size:14.5px;line-height:1.5;margin-bottom:22px;}
+
+  /* ---- TRUST AUDIT SCORE ---- */
+  .audit-card{
+    background:var(--sky-panel);border:1px solid var(--line);
+    border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;
+  }
+  .audit-score{
+    font-family:'Archivo Black',sans-serif;font-size:38px;color:var(--safe-green);
+    line-height:1;
+  }
+  .audit-score-label{font-size:10.5px;color:var(--fog);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px;}
+  .audit-detail{font-size:13px;color:var(--fog);line-height:1.5;}
+  .audit-detail b{color:var(--white);}
+
+  /* ---- CHECKLIST ---- */
+  .checklist{display:flex;flex-direction:column;gap:12px;}
+  .check-item{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--sky-panel);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;
+  }
+  .check-icn{
+    width:22px;height:22px;flex-shrink:0;border-radius:6px;
+    background:rgba(62,207,142,0.15);color:var(--safe-green);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  }
+  .check-item div b{display:block;font-size:14.5px;margin-bottom:2px;}
+  .check-item div span{font-size:13px;color:var(--fog);line-height:1.4;}
+
+  /* ---- AI WIDGET ---- */
+  .ai-widget{
+    position:fixed;bottom:92px;right:16px;z-index:40;
+    width:58px;height:58px;border-radius:50%;
+    background:linear-gradient(135deg,var(--impact),var(--impact-2));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 26px rgba(255,106,43,0.4);
+    animation:float 3s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+  }
+  .ai-widget:after{
+    content:'';position:absolute;inset:-5px;border-radius:50%;
+    border:2px solid rgba(255,106,43,0.35);
+    animation:ringpulse 2s infinite;
+  }
+  @keyframes ringpulse{
+    0%{transform:scale(0.9);opacity:1;}
+    100%{transform:scale(1.5);opacity:0;}
+  }
+
+  /* ---- PRICING ---- */
+  .price-card{
+    background:linear-gradient(165deg,var(--sky-panel-2),var(--sky-panel));
+    border:1px solid rgba(255,106,43,0.3);
+    border-radius:18px;padding:24px;
+  }
+  .price-card .tag{
+    display:inline-block;background:rgba(255,106,43,0.15);color:var(--impact-2);
+    font-size:11px;font-weight:800;letter-spacing:0.05em;
+    padding:4px 10px;border-radius:20px;margin-bottom:14px;
+  }
+  .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;}
+  .price-num{font-family:'Archivo Black',sans-serif;font-size:34px;}
+  .price-unit{color:var(--fog);font-size:13px;}
+  .price-sub{color:var(--fog);font-size:13px;margin-bottom:18px;}
+  .price-list{display:flex;flex-direction:column;gap:9px;margin-bottom:20px;}
+  .price-list div{display:flex;gap:8px;font-size:13.5px;color:var(--white);}
+  .price-list div:before{content:'✓';color:var(--safe-green);font-weight:800;}
+
+  /* ---- FAQ ---- */
+  details{
+    border-bottom:1px solid var(--line);padding:14px 0;
+  }
+  summary{
+    font-size:14.5px;font-weight:700;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;
+    list-style:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary:after{content:'+';font-size:20px;color:var(--impact);}
+  details[open] summary:after{content:'–';}
+  details p{color:var(--fog);font-size:13.5px;line-height:1.55;margin-top:10px;}
+
+  /* ---- STICKY CALL BAR ---- */
+  .sticky-bar{
+    position:fixed;bottom:0;left:0;right:0;z-index:50;
+    background:rgba(18,24,31,0.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:12px 16px;
+    display:flex;gap:10px;
+  }
+  .sticky-bar a{
+    flex:1;text-align:center;padding:14px 10px;border-radius:12px;
+    font-weight:800;font-size:14px;
+  }
+  .sticky-call{background:var(--impact);color:#1a0d05;}
+  .sticky-text{border:1px solid var(--line);color:var(--white);}
+
+  footer{padding:24px 20px 20px;color:var(--steel);font-size:11.5px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="wrap">
+    <div class="ticker-inner">
+      <span class="dot-live"></span>
+      STORM ALERT · 1.25" HAIL REPORTED ENGLEWOOD 8/13 · FREE INSPECTIONS BOOKING NOW
+    </div>
+  </div>
+</div>
+
+<nav class="wrap">
+  <div class="logo">DENTAGON<span>.</span>AUTO HAIL REPAIR</div>
+  <div class="nav-badge">DENVER METRO</div>
+</nav>
+
+<section class="hero wrap">
+  <div class="hero-eyebrow">⚡ Active storm response team</div>
+  <h1>Castle Rock just got hammered.<em>Don't let the calls outrun you.</em></h1>
+  <p>Castle Rock and Douglas County just got hit. The calls are coming — day and night. Don't let a missed call become a lost job.</p>
+  <div class="hero-ctas">
+    <a href="tel:+13034194575" class="btn-primary">Call Now — Free Inspection</a>
+    <a href="#estimate" class="btn-secondary">See If You Qualify →</a>
+  </div>
+
+  <div class="impact-visual" aria-hidden="true">
+    <svg viewBox="0 0 400 150">
+      <circle cx="120" cy="60" r="3" fill="#ffb020" opacity="0.9"/>
+      <circle cx="118" cy="60" r="14" fill="none" stroke="#ff6a2b" stroke-width="1" opacity="0.5"/>
+      <circle cx="118" cy="60" r="24" fill="none" stroke="#ff6a2b" stroke-width="0.7" opacity="0.3"/>
+      <circle cx="260" cy="95" r="2.5" fill="#ffb020" opacity="0.9"/>
+      <circle cx="260" cy="95" r="12" fill="none" stroke="#ff6a2b" stroke-width="1" opacity="0.45"/>
+      <circle cx="300" cy="40" r="2" fill="#ffb020" opacity="0.8"/>
+      <circle cx="300" cy="40" r="10" fill="none" stroke="#ff6a2b" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="180" cy="110" r="2" fill="#ffb020" opacity="0.7"/>
+      <circle cx="180" cy="110" r="9" fill="none" stroke="#ff6a2b" stroke-width="0.7" opacity="0.35"/>
+    </svg>
+  </div>
+</section>
+
+<section class="section wrap" id="audit">
+  <div class="eyebrow-label">Your risk right now</div>
+  <h2>Roof Damage Odds</h2>
+  <p class="section-sub">Based on today's storm track through your zip code.</p>
+  <div class="audit-card">
+    <div>
+      <div class="audit-score">82%</div>
+      <div class="audit-score-label">Likely Damage</div>
+    </div>
+    <div class="audit-detail">Homes in <b>Englewood, Arvada &amp; SE Denver</b> hit by half-dollar-sized hail on 8/13 typically show cracked shingles, gutter dents, and granule loss — even when it's not visible from the ground.</div>
+  </div>
+</section>
+
+<section class="section wrap" id="services">
+  <div class="eyebrow-label">What we do</div>
+  <h2>Storm Response, Start to Finish</h2>
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-icn">1</div>
+      <div><b>AI answers every call, 24/7</b><span>While you're under a hood or on a roof, every call still gets picked up and booked.</span></div>
+    </div>
+    <div class="check-item">
+      <div class="check-icn">2</div>
+      <div><b>Missed-call text-back</b><span>Anyone you can't reach gets an instant text so they don't call your competitor next.</span></div>
+    </div>
+    <div class="check-item">
+      <div class="check-icn">3</div>
+      <div><b>Booked while you sleep</b><span>After-hours calls get captured and queued so your morning starts with a full schedule, not voicemails.</span></div>
+    </div>
+    <div class="check-item">
+      <div class="check-icn">4</div>
+      <div><b>No extra hires needed yet</b><span>Handle the surge with the team you have — the AI covers the phone line.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="estimate">
+  <div class="eyebrow-label">No cost to start</div>
+  <h2>Book Your Inspection</h2>
+  <div class="price-card">
+    <span class="tag">MOST HOMEOWNERS PAY $0</span>
+    <div class="price-row">
+      <div class="price-num">$0</div>
+      <div class="price-unit">/ inspection</div>
+    </div>
+    <div class="price-sub">Covered damage repairs billed directly to your insurance. You only cover your standard deductible.</div>
+    <div class="price-list">
+      <div>Drone roof scan, same week</div>
+      <div>Written damage report for your insurer</div>
+      <div>Insurance claim filed &amp; managed for you</div>
+      <div>No obligation to book repairs</div>
+    </div>
+    <a href="tel:+13034194575" class="btn-primary" style="display:block;">Call 303-419-4575</a>
+  </div>
+</section>
+
+<section class="section wrap" id="faq">
+  <div class="eyebrow-label">Questions</div>
+  <h2>Before You Call</h2>
+  <details open>
+    <summary>Will this cost me anything upfront?</summary>
+    <p>No. The inspection is always free. If your insurance approves the claim, repairs are billed to them directly — you're only responsible for your policy's standard deductible.</p>
+  </details>
+  <details>
+    <summary>How fast can someone come out?</summary>
+    <p>Most inspections are scheduled within 24–48 hours during active storm response. Call now to get on today's route.</p>
+  </details>
+  <details>
+    <summary>What if my insurance denies the claim?</summary>
+    <p>We document everything with drone imagery and a licensed adjuster walkthrough, and we appeal on your behalf if the first response is a lowball or denial.</p>
+  </details>
+  <details>
+    <summary>Do I have to use you for the repair?</summary>
+    <p>No obligation. The inspection and claim documentation are yours to use with any contractor — though most homeowners stay with us once they see the process.</p>
+  </details>
+</section>
+
+<div class="ai-widget" role="button" aria-label="Chat with us"></div>
+
+<div class="sticky-bar">
+  <a href="tel:+13034194575" class="sticky-call">📞 Call Now</a>
+  <a href="sms:+13034194575" class="sticky-text">💬 Text Us</a>
+</div>
+
+<footer>
+  Dentagon Auto Hail Repair · Denver Metro &amp; Front Range<br>
+  Demo built by Mile High AI — not an active listing
+</footer>
+
+</body>
+</html>
