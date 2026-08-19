@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marnex Products — Welcome Back</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap');
+  :root{
+    --navy:#1B2A3D; --navy-deep:#131F2C; --gold:#B4893F; --ice:#7FB8C4; --off:#F2EFE9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--off); color:var(--navy); font-family:'Source Sans 3',sans-serif;
+    -webkit-font-smoothing:antialiased; max-width:430px; margin:0 auto; min-height:100vh; padding-bottom:90px; }
+  header{ background:var(--navy); color:var(--off); padding:30px 22px 34px; position:relative; overflow:hidden; }
+  .dial{ position:absolute; top:-60px; right:-60px; width:180px; height:180px; border-radius:50%; border:14px solid var(--gold); opacity:0.18; }
+  .badge{ display:inline-block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ice); margin-bottom:16px; }
+  h1{ font-family:'Manrope',sans-serif; font-weight:800; font-size:28px; line-height:1.18; position:relative; z-index:1; }
+  h1 em{ font-style:normal; color:var(--gold); }
+  .sub{ margin-top:14px; font-size:14.5px; color:#C6D0DA; line-height:1.6; position:relative; z-index:1; }
+  .since{ margin-top:18px; display:inline-block; background:var(--navy-deep); border-radius:999px; padding:6px 14px; font-size:11.5px; color:var(--ice); position:relative; z-index:1; }
+  section{padding:28px 22px;}
+  .eyebrow{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:10px; }
+  h2{ font-family:'Manrope',sans-serif; font-weight:700; font-size:20px; margin-bottom:14px; color:var(--navy); }
+  p{font-size:14.5px; line-height:1.6; color:#4A5A68;}
+  .note-card{ background:#fff; border:1px solid #E2DCD0; border-left:3px solid var(--gold); border-radius:8px; padding:16px 18px; margin-bottom:24px; }
+  .note-card p{ font-style:italic; color:#3A4552; }
+  .note-card .sig{ margin-top:10px; font-style:normal; font-weight:700; font-size:13px; color:var(--navy); }
+  .chat-demo{ background:#fff; border:1px solid #E2DCD0; border-radius:10px; padding:16px; margin-top:6px; }
+  .msg{ background:var(--off); border-radius:6px; padding:12px 14px; font-size:13.5px; margin-bottom:10px; line-height:1.5; color:#3A4552; }
+  .msg.out{ background:var(--navy); color:#fff; margin-left:14%; }
+  .msg .tag{ display:block; font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--gold); margin-bottom:4px; }
+  .msg.out .tag{color:var(--ice);}
+  .intake{ margin-top:18px; background:#fff; border:1px solid #E2DCD0; border-radius:10px; padding:16px; }
+  .intake .eyebrow{ margin-bottom:12px; }
+  .intake-q{ display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid #EEE8DC; font-size:13px; color:#3A4552; }
+  .intake-q:last-child{ border-bottom:none; }
+  .intake-q .n{ flex:0 0 auto; width:19px; height:19px; border-radius:50%; background:var(--gold); color:#fff; font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .price-card{ background:#fff; border:1px solid #E2DCD0; border-radius:10px; padding:22px; }
+  .price-line{ display:flex; justify-content:space-between; align-items:baseline; padding:12px 0; border-bottom:1px solid #EEE8DC; }
+  .price-line:last-child{border-bottom:none;}
+  .price-line .amt{ font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; color:var(--navy); }
+  .price-line .desc{font-size:12.5px; color:#7A8695;}
+  footer{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:var(--gold); padding:16px 22px; text-align:center; }
+  footer a{ display:block; color:#fff; font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; text-decoration:none; }
+  footer .sub-note{ font-size:11px; color:#F5E9D3; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="dial"></div>
+  <span class="badge">A Little Something From Elijah</span>
+  <h1>Marnex Products, <em>brought online</em> the way it deserves.</h1>
+  <p class="sub">Same relationship, same trust — just showing you what I've been building lately.</p>
+  <div class="since">Serving Cleveland since 1993</div>
+</header>
+
+<section>
+  <div class="note-card">
+    <p>"James — it's been a minute. Wanted to put something real in front of you instead of just calling out of nowhere. This is a quick look at what a modern lead system could look like for Marnex — no pressure, just wanted you to see it."</p>
+    <div class="sig">— Elijah</div>
+  </div>
+
+  <div class="eyebrow">How it works for a promo products business</div>
+  <h2>Quote requests, captured the moment they come in</h2>
+  <div class="chat-demo">
+    <div class="msg"><span class="tag">Website visitor · 9:14pm</span>Need 250 custom koozies for a company event next month, do you do rush orders?</div>
+    <div class="msg out"><span class="tag">Auto-reply · 9:14pm</span>Great — koozies are one of our most popular items. Let me grab a few quick details so James can send an accurate quote first thing tomorrow.</div>
+  </div>
+
+  <div class="intake">
+    <div class="eyebrow">What the system asks</div>
+    <div class="intake-q"><div class="n">1</div>What product are you looking for?</div>
+    <div class="intake-q"><div class="n">2</div>Roughly how many pieces?</div>
+    <div class="intake-q"><div class="n">3</div>Do you already have artwork/logo files?</div>
+    <div class="intake-q"><div class="n">4</div>What's your event or in-hand date?</div>
+    <div class="intake-q"><div class="n">5</div>Best number or email for the quote?</div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">The offer</div>
+  <h2>Same terms I give everyone — no contract</h2>
+  <div class="price-card">
+    <div class="price-line"><div class="desc">One-time setup<br>Demo site + lead-capture system live</div><div class="amt">$497</div></div>
+    <div class="price-line"><div class="desc">Monthly<br>Fully managed, cancel anytime</div><div class="amt">$297</div></div>
+  </div>
+</section>
+
+<footer>
+  <a href="sms:2165982306">Text Elijah Back →</a>
+  <div class="sub-note">Or just call — same number as always</div>
+</footer>
+
+</body>
+</html>
