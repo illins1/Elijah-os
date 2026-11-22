@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">\n<meta name="theme-color" content="#111318">\n<link rel="icon" href="./icon.svg" type="image/svg+xml">\n<link rel="manifest" href="./manifest.webmanifest">
+<title>Command Center — Mile High AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111318; --card:#1B1E26; --card-border:#2A2E38;
+    --gold:#F2A93B; --gold-dim:#8a6420; --sky:#4FA8D8;
+    --text:#EDEEF2; --muted:#8B8F98; --green:#4CAF6D; --red:#E3584B;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; max-width:430px; margin:0 auto; min-height:100vh; padding-bottom:90px; }
+  header{ padding:22px 18px 16px; border-bottom:1px solid var(--card-border); position:sticky; top:0; background:var(--bg); z-index:10; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  h1{ font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:30px; margin:2px 0 0; letter-spacing:.01em; }
+  .elevation{ display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); margin-top:6px; }
+  .elevation .num{ color:var(--gold); font-weight:700; font-family:'Barlow Condensed',sans-serif; font-size:13px; }
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:16px 18px 4px; }
+  .stat{ background:var(--card); border:1px solid var(--card-border); border-radius:12px; padding:12px 10px; text-align:center; }
+  .stat .n{ font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:700; }
+  .stat .l{ font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+  .filters{ display:flex; gap:8px; padding:14px 18px 6px; overflow-x:auto; }
+  .filter{ flex:0 0 auto; font-size:12px; padding:7px 13px; border-radius:20px; border:1px solid var(--card-border); color:var(--muted); font-weight:600; white-space:nowrap; }
+  .filter.active{ background:var(--gold); color:#1a1300; border-color:var(--gold); }
+  .list{ padding:8px 18px 0; }
+  .card{ background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px; margin-bottom:12px; }
+  .card.emergency{ border-color:var(--red); }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .biz-name{ font-weight:700; font-size:16px; }
+  .niche{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .status{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:4px 9px; border-radius:20px; white-space:nowrap; }
+  .status.new{ background:rgba(242,169,59,.15); color:var(--gold); }
+  .status.contacted{ background:rgba(79,168,216,.15); color:var(--sky); }
+  .status.demo{ background:rgba(76,175,109,.15); color:var(--green); }
+  .status.warm{ background:rgba(199,124,147,.15); color:#c97c93; }
+  .status.emergency{ background:rgba(227,88,75,.18); color:var(--red); }
+  .card-actions{ display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; margin-top:14px; }
+  .btn.email{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
+  .btn{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:12px 4px; border-radius:12px; text-decoration:none; font-size:11px; font-weight:700; min-height:44px; border:1px solid var(--card-border); color:var(--text); }
+  .btn.call{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
+  .btn.text{ background:var(--red); border-color:var(--red); color:#2a0e0a; }
+  .btn.demo{ background:transparent; color:var(--gold); border-color:var(--gold-dim); }
+  nav{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:#161822; border-top:1px solid var(--card-border); display:flex; padding:10px 8px calc(10px + env(safe-area-inset-bottom)); }
+  nav a{ flex:1; text-align:center; font-size:11px; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 0; }
+  nav a.active{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Mile High AI</div>
+  <h1>Command Center</h1>
+  <div class="elevation"><span class="num">5,280</span> ft — Front Range prospect pipeline</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="n" id="stat-new">–</div><div class="l">New</div></div>
+  <div class="stat"><div class="n" id="stat-demo">–</div><div class="l">Demo Ready</div></div>
+  <div class="stat"><div class="n" id="stat-warm">–</div><div class="l">Warm Leads</div></div>
+</div>
+
+<div class="filters" id="pipeline-filters">
+  <div class="filter active" data-f="all">All</div>
+  <div class="filter" data-f="new">New</div>
+  <div class="filter" data-f="demo">Demo Ready</div>
+  <div class="filter" data-f="emergency">🚨 Emergency</div>
+</div>
+
+<div class="list" id="list"></div>
+<div class="list" id="warm-list" style="display:none;"></div>
+
+<nav>
+  <a href="#" class="active" data-view="pipeline">Pipeline</a>
+  <a href="#" data-view="warm">Warm Leads</a>
+</nav>
+
+<script>
+const prospects = [
+  { name: "AWD Denver Automotive LLC", niche: "Auto Repair — S. Broadway", phone: "7203883880", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/awd-denver-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for AWD Denver Automotive. Check it out:" },
+  { name: "Wilmer's Detail Center", niche: "Auto Detailing — S. Broadway", phone: "7207917333", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/wilmers-detail-center/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Wilmer's Detail Center. Check it out:" },
+  { name: "Universal Auto Sale", niche: "Auto Sales — Englewood", phone: "7202200057", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/universal-auto-sale/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Universal Auto Sale. Check it out:" },
+  { name: "Jeff's Automotive", niche: "Auto Repair — S. Broadway", phone: "3034551264", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/jeffs-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Jeff's Automotive. Check it out:" },
+  { name: "Englewood Auto Repair & Body Shop", niche: "Auto Body — S. Broadway", phone: "3037613246", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/englewood-auto-repair/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Englewood Auto Repair. Check it out:" },
+  { name: "B&A Automotive", niche: "Auto Repair — S. Broadway", phone: "3039161649", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/ba-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for B&A Automotive. Check it out:" },
+  { name: "LG Automotive", niche: "Auto Repair — S. Broadway", phone: "3035477875", email: "", status: "new", emergency:false, demo: "https://illins1.github.io/Elijah-os/lg-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for LG Automotive. Check it out:" },
+  { name: "Emergency Plumbers Denver LLC", niche: "Emergency Plumbing — 24/7", phone: "7202158600", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/emergency-plumbers-denver/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Emergency Plumbers Denver. Check it out:" },
+  { name: "Sindibad Auto Sales", niche: "Auto Sales — Englewood", phone: "3035696394", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/sindibad-auto-sales/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Sindibad Auto Sales. Check it out:" },
+  { name: "Shaun's Automotive", niche: "Auto Repair — S. Broadway", phone: "3037837042", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/shauns-automotive/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for Shaun's Automotive. Check it out:" },
+  { name: "iAuto", niche: "Auto Sales — Englewood", phone: "7207074177", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/iauto/", smsBody: "Hey! This is Elijah with Mile High AI — free AI visibility audit + demo site for iAuto. Check it out:" },
+  { name: "Maxwell Restoration", niche: "Restoration Services", phone: "", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/maxwell-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site I built for Maxwell Restoration:" },
+  { name: "Artful Aesthetic Medicine", niche: "Med Spa", phone: "3039013381", email: "", status: "demo", emergency:false, demo: "https://illins1.github.io/Elijah-os/artful-aesthetic-medicine/", smsBody: "Hey! This is Elijah with Mile High AI — here's the demo site for Artful Aesthetic Medicine:" },
+  { name: "Old School PDR", niche: "Mobile Hail/PDR — Englewood", phone: "7204456211", email: "", status: "demo", emergency:true, demo: "https://illins1.github.io/Elijah-os/old-school-pdr/", smsBody: "Hey Javier, this is Elijah with Mile High AI — local to South Denver. With this week's hail I put together a private mobile-booking page concept for Old School PDR so customers can call/text you directly while you're out on jobs:" },
+  { name: "[Roofing Prospect — TBD]", niche: "Hail/Storm Roofing Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-roofing/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
+  { name: "[Auto Hail Prospect — TBD]", niche: "Hail/Storm Auto-PDR Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-auto-pdr/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" },
+  { name: "[Restoration Prospect — TBD]", niche: "Hail/Storm Restoration Template", phone: "", email: "", status: "new", emergency:true, demo: "https://illins1.github.io/Elijah-os/hail-restoration/", smsBody: "Hey! This is Elijah with Mile High AI — free hail-storm response demo site. Check it out:" }
+];
+
+const warmLeads = [
+  { name: "Rick Guedes — Guedes Construction", niche: "Historical client · reactivation", phone: "7605596907", email: "rick@guedesconstruction.com", demo: "https://illins1.github.io/Elijah-os/rick-guedes/", smsBody: "Hey Rick — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
+  { name: "Jon — QCD Promos", niche: "Historical client · reactivation", phone: "3053088757", email: "", demo: "https://illins1.github.io/Elijah-os/qcd-promos/", smsBody: "Hey Jon — it's Elijah. Been a minute! Built you something to show what I've been up to:" },
+  { name: "James Epstein — Marnex Products", niche: "Promotional Products · Cleveland, OH · Historical client", phone: "2165982306", email: "marnexproducts@gmail.com", demo: "https://illins1.github.io/Elijah-os/marnex-products/", smsBody: "Hey James — it's Elijah. Been a minute! Built you something to show what I've been up to:" }
+];
+
+function statusLabel(s){ return {new:"New", contacted:"Contacted", demo:"Demo Ready"}[s] || s; }
+
+function cardHtml(p, isWarm){
+  const smsHref = p.phone ? `sms:${p.phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(p.smsBody + (p.demo ? ' ' + p.demo : ''))}` : '#';
+  const callHref = p.phone ? `tel:${p.phone}` : '#';
+  const emailHref = p.email ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.email)}&su=${encodeURIComponent('Free AI visibility audit + demo site for ' + p.name)}&body=${encodeURIComponent(p.smsBody + (p.demo ? '\n\n' + p.demo : '') + '\n\n— Elijah, Mile High AI')}&authuser=creationandthings@gmail.com` : '#';
+  const statusClass = isWarm ? 'warm' : (p.emergency ? 'emergency' : p.status);
+  const statusText = isWarm ? 'Warm Lead' : (p.emergency ? '🚨 Emergency' : statusLabel(p.status));
+  return `
+    <div class="card ${p.emergency ? 'emergency' : ''}">
+      <div class="card-top">
+        <div>
+          <div class="biz-name">${p.name}</div>
+          <div class="niche">${p.niche}</div>
+        </div>
+        <div class="status ${statusClass}">${statusText}</div>
+      </div>
+      <div class="card-actions">
+        <a class="btn call" href="${callHref}">📞<span>${p.phone ? 'Call' : 'No #'}</span></a>
+        <a class="btn text" href="${smsHref}">💬<span>Text</span></a>
+        <a class="btn email" href="${emailHref}" style="${p.email ? '' : 'opacity:.35;pointer-events:none;'}">✉️<span>${p.email ? 'Email' : 'No email'}</span></a>
+        ${p.demo ? `<a class="btn demo" href="${p.demo}" target="_blank">🔗<span>Demo</span></a>` : `<div class="btn demo" style="opacity:.35">🔗<span>No demo</span></div>`}
+      </div>
+    </div>`;
+}
+
+function render(filter){
+  const list = document.getElementById('list');
+  let filtered = prospects;
+  if (filter === 'emergency') filtered = prospects.filter(p => p.emergency);
+  else if (filter !== 'all') filtered = prospects.filter(p => p.status === filter);
+  list.innerHTML = filtered.map(p => cardHtml(p, false)).join('');
+  document.getElementById('stat-new').textContent = prospects.filter(p=>p.status==='new').length;
+  document.getElementById('stat-demo').textContent = prospects.filter(p=>p.demo).length;
+  document.getElementById('stat-warm').textContent = warmLeads.length;
+}
+
+function renderWarm(){
+  document.getElementById('warm-list').innerHTML = warmLeads.map(p => cardHtml(p, true)).join('');
+}
+
+document.querySelectorAll('.filter').forEach(f => {
+  f.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));
+    f.classList.add('active');
+    render(f.dataset.f);
+  });
+});
+
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    const view = a.dataset.view;
+    document.getElementById('list').style.display = view === 'pipeline' ? '' : 'none';
+    document.getElementById('warm-list').style.display = view === 'warm' ? '' : 'none';
+    document.getElementById('pipeline-filters').style.display = view === 'pipeline' ? 'flex' : 'none';
+  });
+});
+
+render('all');
+renderWarm();
+</script>
+
+</body>
+</html>

@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">\n<meta name="theme-color" content="#111318">\n<link rel="icon" href="./icon.svg" type="image/svg+xml">\n<link rel="manifest" href="./manifest.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="theme-color" content="#111318">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
 <title>Command Center — Mile High AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,6 +50,17 @@
   nav{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:#161822; border-top:1px solid var(--card-border); display:flex; padding:10px 8px calc(10px + env(safe-area-inset-bottom)); }
   nav a{ flex:1; text-align:center; font-size:11px; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 0; }
   nav a.active{ color:var(--gold); }
+
+  /* ---- Content tab (Shorts + posts copy/paste) ---- */
+  .c-intro{ font-size:13px; color:var(--muted); margin:2px 0 14px; line-height:1.5; }
+  .c-h{ font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; color:var(--gold); margin:18px 0 8px; letter-spacing:.02em; }
+  .c-title{ font-weight:700; font-size:16px; }
+  .c-meta{ font-size:12px; color:var(--muted); margin:2px 0 8px; }
+  .c-lab{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--sky); margin:12px 0 4px; }
+  .c-box{ white-space:pre-wrap; word-break:break-word; background:#12151c; border:1px solid var(--card-border); border-left:3px solid var(--gold); border-radius:10px; padding:10px 12px; font-size:13px; line-height:1.5; margin:0 0 6px; }
+  .c-copy{ width:100%; min-height:44px; border-radius:10px; border:1px solid var(--gold-dim); background:transparent; color:var(--gold); font:700 14px 'Inter',sans-serif; }
+  .c-copy.done{ background:var(--green); border-color:var(--green); color:#07130b; }
+  .c-list{ margin:0; padding-left:20px; font-size:13px; line-height:1.6; }
 </style>
 </head>
 <body>
@@ -72,10 +86,12 @@
 
 <div class="list" id="list"></div>
 <div class="list" id="warm-list" style="display:none;"></div>
+<div class="list" id="content-list" style="display:none;"></div>
 
 <nav>
   <a href="#" class="active" data-view="pipeline">Pipeline</a>
   <a href="#" data-view="warm">Warm Leads</a>
+  <a href="#" data-view="content">Content</a>
 </nav>
 
 <script>
@@ -163,11 +179,78 @@ document.querySelectorAll('nav a').forEach(a => {
     document.getElementById('list').style.display = view === 'pipeline' ? '' : 'none';
     document.getElementById('warm-list').style.display = view === 'warm' ? '' : 'none';
     document.getElementById('pipeline-filters').style.display = view === 'pipeline' ? 'flex' : 'none';
+    document.getElementById('content-list').style.display = view === 'content' ? '' : 'none';
   });
 });
 
 render('all');
 renderWarm();
+
+/* ===== Content tab: Tapsag Shorts + posts (copy / paste) ===== */
+(function(){
+  var TS="Cinematic faceless visual, soft golden light, slow gentle camera movement, calm reverent mood, warm gold and deep blue palette, no faces, no text in frame, 9:16 vertical, 15 seconds.";
+  var CTA="Send it free at tapsag.shop.";
+  var TAGS="#scripture #kjv #bible #faith #shorts";
+  var SHORTS=[
+    ["1. Morning","Psalm 118:24","START TODAY RIGHT",
+     "This is the day which the LORD hath made; we will rejoice and be glad in it. Psalm 118:24. Start today with this. Send it to someone who needs a good morning. "+CTA,
+     "Slow push-in on sunrise breaking over a misty mountain valley, light rays through clouds, dew on grass in the foreground. "+TS,
+     "Start your morning with this. Psalm 118:24. Send it to someone today at tapsag.shop "+TAGS],
+    ["2. Comfort","Isaiah 41:10","YOU ARE NOT ALONE",
+     "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee. Isaiah 41:10. If today is heavy, hold on to this. "+CTA,
+     "Slow drift over a calm lake at dusk, the last of a soft rain ending, light breaking through the clouds onto the water. "+TS,
+     "For the hard days. Isaiah 41:10. Send this to someone who needs it at tapsag.shop "+TAGS],
+    ["3. Send this to someone","Numbers 6:24 to 26","SEND THIS TO SOMEONE",
+     "The LORD bless thee, and keep thee: the LORD make his face shine upon thee, and be gracious unto thee: the LORD lift up his countenance upon thee, and give thee peace. Numbers 6:24 to 26. Who needs this blessing today? "+CTA,
+     "Slow tilt up through tall pine trees to a bright sky, warm light glowing through the branches. "+TS,
+     "A blessing for someone you love. Numbers 6:24 to 26. Send it at tapsag.shop "+TAGS],
+    ["4. Scripture and one application","2 Timothy 1:7","FEAR HAS NO POWER",
+     "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind. 2 Timothy 1:7. Today, name one fear and say this verse out loud. Then send it to a friend. "+CTA,
+     "Wide field of wheat swaying at sunset, camera slowly gliding forward, warm sky turning deep blue at the edges. "+TS,
+     "One verse. One fear. 2 Timothy 1:7. Send it at tapsag.shop "+TAGS],
+    ["5. Church friendly","Hebrews 10:24","ENCOURAGE SOMEONE",
+     "And let us consider one another to provoke unto love and to good works. Hebrews 10:24. Who in your church could use a word this week? "+CTA,
+     "Empty church interior, sunlight streaming through stained glass, slow push down the center aisle, dust floating in the light. No people. "+TS,
+     "Encourage someone at church this week. Hebrews 10:24. tapsag.shop "+TAGS],
+    ["6. How it works (screen record)","Record your phone screen, no AI video","TAKE A PIC, SEND A GIFT",
+     "Take a picture. Pick a verse. Send a gift. It takes under a minute, and email is free. "+CTA,
+     "Screen record in this order: open tapsag.shop, take or choose a photo or video, pick a scripture, add a short note, choose Email, tap send, then open the gift link to show the recipient page. Keep it under 20 seconds and add the voiceover in CapCut.",
+     "Take a picture, pick a verse, send a gift. Free by email at tapsag.shop "+TAGS]
+  ];
+  var CHECK=["Generate the clip, add the voiceover and verse text in CapCut.","Export once, vertical 9:16.","Post the same file to YouTube Shorts, Instagram Reels and TikTok.","Paste the caption. Put tapsag.shop in the bio link.","Use the thumbnail text on the YouTube cover frame."];
+  var MASTER="You are the production partner for two series run by Elijah, a solo founder in Denver.\n\nSHOW 1: Snipe City Snype. Denver hip-hop stick-figure animated series. Characters: Divine, Jayden, Marcus, Elder Bill Grayhawk, Amara, Carlos. Snipe City is the stylized version of Denver.\nSHOW 2: Tapsag Scripture Edition. Faceless KJV scripture Shorts that promote tapsag.shop, where people send a photo or video with a verse as a gift.\n\nWORKFLOW for every request:\n1. Write the script.\n2. Split it into shots of 15 seconds or less. One shot equals one Seedance 2.0 generation.\n3. Put framing and a camera move in every prompt.\n4. Call saved characters and locations by name.\n5. Finish with a caption, hashtags and thumbnail text.\n\nRULES:\n- Vertical 9:16.\n- Paste the show's style line into every prompt for consistency.\n- Quote KJV scripture exactly. Never show faces in Tapsag videos.\n- Any locked feature is labeled Coming Soon and unclickable.\n- Give several ideas at once when asked for ideas.\n- Keep answers short, in checklists, readable on a phone. Ask at most one question.";
+
+  var n=0;
+  function blk(label,text){
+    var id='cc'+(n++);
+    return '<div class="c-lab">'+label+'</div><div class="c-box" id="'+id+'"></div><button class="c-copy" data-ct="'+id+'">Copy</button>'
+      +'<script type="application/json" data-for="'+id+'">'+JSON.stringify(text).replace(/</g,'\\u003c')+'<\/script>';
+  }
+  function build(){
+    var h='<div class="c-intro">Copy-and-paste content packs. Tap Copy, paste into CapCut, YouTube, Instagram or TikTok. Every post points to tapsag.shop.</div>';
+    h+='<div class="c-h">Tapsag Shorts</div>';
+    SHORTS.forEach(function(s){
+      var yt=(s[2].charAt(0)+s[2].slice(1).toLowerCase())+' | '+s[1].replace(/ to /,'-');
+      h+='<div class="card"><div class="c-title">'+s[0]+'</div><div class="c-meta">'+s[1]+' · Thumbnail text: '+s[2]+'</div>'
+        +blk('Voiceover + on-screen text',s[3])+blk('Video prompt',s[4])+blk('Caption (all platforms)',s[5])+blk('YouTube title',yt)+'</div>';
+    });
+    h+='<div class="c-h">Posting checklist</div><div class="card"><ul class="c-list">'+CHECK.map(function(c){return '<li>'+c+'</li>';}).join('')+'</ul></div>';
+    h+='<div class="c-h">Master prompt</div><div class="c-meta">Paste into the instructions of a Claude Project (Snipe City + Tapsag).</div><div class="card">'+blk('Project instructions',MASTER)+'</div>';
+    document.getElementById('content-list').innerHTML=h;
+    // fill text safely
+    document.querySelectorAll('#content-list script[data-for]').forEach(function(sc){
+      document.getElementById(sc.getAttribute('data-for')).textContent=JSON.parse(sc.textContent);
+    });
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.c-copy');if(!b)return;
+    var t=document.getElementById(b.getAttribute('data-ct')).textContent;
+    function ok(){b.textContent='Copied';b.classList.add('done');setTimeout(function(){b.textContent='Copy';b.classList.remove('done');},1400);}
+    function fb(){var r=document.createRange();r.selectNodeContents(document.getElementById(b.getAttribute('data-ct')));var g=getSelection();g.removeAllRanges();g.addRange(r);try{document.execCommand('copy');ok();}catch(x){}}
+    try{navigator.clipboard.writeText(t).then(ok,fb);}catch(x){fb();}
+  });
+  build();
+})();
 </script>
 
 </body>
