@@ -61,6 +61,31 @@
   .c-copy{ width:100%; min-height:44px; border-radius:10px; border:1px solid var(--gold-dim); background:transparent; color:var(--gold); font:700 14px 'Inter',sans-serif; }
   .c-copy.done{ background:var(--green); border-color:var(--green); color:#07130b; }
   .c-list{ margin:0; padding-left:20px; font-size:13px; line-height:1.6; }
+
+  /* ---- Daily Briefing ---- */
+  .b-hi{ font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:28px; margin:4px 0 0; }
+  .b-date{ font-size:12px; color:var(--muted); margin:2px 0 14px; }
+  .b-h{ font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; color:var(--gold); margin:0 0 10px; letter-spacing:.02em; }
+  .b-row{ display:flex; align-items:center; gap:12px; min-height:44px; padding:6px 0; border-bottom:1px solid var(--card-border); font-size:14px; line-height:1.35; }
+  .b-row:last-child{ border-bottom:none; }
+  .b-row.done .b-txt{ color:var(--muted); text-decoration:line-through; }
+  .b-chk{ flex:0 0 28px; width:28px; height:28px; border-radius:8px; border:2px solid var(--gold-dim); background:transparent; color:#07130b; font-size:16px; font-weight:800; padding:0; }
+  .b-row.done .b-chk{ background:var(--green); border-color:var(--green); }
+  .b-txt{ flex:1; }
+  .b-pill{ flex:0 0 auto; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:4px 9px; border-radius:20px; white-space:nowrap; }
+  .b-ok{ background:rgba(76,175,109,.15); color:var(--green); }
+  .b-wait{ background:rgba(242,169,59,.15); color:var(--gold); }
+  .b-off{ background:rgba(139,143,152,.15); color:var(--muted); }
+  .b-bad{ background:rgba(227,88,75,.18); color:var(--red); }
+  .b-sub{ font-size:11px; color:var(--muted); }
+  .b-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:6px; }
+  .b-grid .stat{ padding:10px 4px; }
+  .b-go{ display:flex; align-items:center; justify-content:center; min-height:44px; border-radius:12px; border:1px solid var(--gold-dim); color:var(--gold); font-weight:700; font-size:13px; text-decoration:none; width:100%; background:transparent; margin-top:8px; }
+  .b-call{ flex:0 0 auto; display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; border-radius:12px; background:var(--red); color:#2a0e0a; text-decoration:none; font-size:18px; }
+  .b-add{ display:flex; gap:8px; margin-top:10px; }
+  .b-add input{ flex:1; min-height:44px; border-radius:10px; border:1px solid var(--card-border); background:#12151c; color:var(--text); padding:0 12px; font:500 14px 'Inter',sans-serif; }
+  .b-add button{ min-width:64px; min-height:44px; border-radius:10px; border:1px solid var(--gold-dim); background:transparent; color:var(--gold); font:700 13px 'Inter',sans-serif; }
+  .b-note{ font-size:11px; color:var(--muted); line-height:1.5; padding:4px 2px 14px; }
 </style>
 </head>
 <body>
@@ -71,7 +96,7 @@
   <div class="elevation"><span class="num">5,280</span> ft — Front Range prospect pipeline</div>
 </header>
 
-<div class="stats">
+<div class="stats" id="stats">
   <div class="stat"><div class="n" id="stat-new">–</div><div class="l">New</div></div>
   <div class="stat"><div class="n" id="stat-demo">–</div><div class="l">Demo Ready</div></div>
   <div class="stat"><div class="n" id="stat-warm">–</div><div class="l">Warm Leads</div></div>
@@ -84,12 +109,14 @@
   <div class="filter" data-f="emergency">🚨 Emergency</div>
 </div>
 
-<div class="list" id="list"></div>
+<div class="list" id="briefing-list"></div>
+<div class="list" id="list" style="display:none;"></div>
 <div class="list" id="warm-list" style="display:none;"></div>
 <div class="list" id="content-list" style="display:none;"></div>
 
 <nav>
-  <a href="#" class="active" data-view="pipeline">Pipeline</a>
+  <a href="#" class="active" data-view="briefing">Briefing</a>
+  <a href="#" data-view="pipeline">Pipeline</a>
   <a href="#" data-view="warm">Warm Leads</a>
   <a href="#" data-view="content">Content</a>
 </nav>
@@ -170,21 +197,115 @@ document.querySelectorAll('.filter').forEach(f => {
   });
 });
 
+function showView(view){
+  document.querySelectorAll('nav a').forEach(x=>x.classList.toggle('active', x.dataset.view === view));
+  document.getElementById('briefing-list').style.display = view === 'briefing' ? '' : 'none';
+  document.getElementById('stats').style.display = view === 'briefing' ? 'none' : '';
+  document.getElementById('list').style.display = view === 'pipeline' ? '' : 'none';
+  document.getElementById('warm-list').style.display = view === 'warm' ? '' : 'none';
+  document.getElementById('pipeline-filters').style.display = view === 'pipeline' ? 'flex' : 'none';
+  document.getElementById('content-list').style.display = view === 'content' ? '' : 'none';
+  window.scrollTo(0,0);
+}
 document.querySelectorAll('nav a').forEach(a => {
-  a.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
-    a.classList.add('active');
-    const view = a.dataset.view;
-    document.getElementById('list').style.display = view === 'pipeline' ? '' : 'none';
-    document.getElementById('warm-list').style.display = view === 'warm' ? '' : 'none';
-    document.getElementById('pipeline-filters').style.display = view === 'pipeline' ? 'flex' : 'none';
-    document.getElementById('content-list').style.display = view === 'content' ? '' : 'none';
-  });
+  a.addEventListener('click', (e) => { e.preventDefault(); showView(a.dataset.view); });
 });
 
 render('all');
 renderWarm();
+
+/* ===== Daily Briefing: real data only. Pipeline numbers are computed from the
+   records above; Tapsag statuses below are set by hand (dated) so they never
+   pretend to be live data. ===== */
+(function(){
+  var box = document.getElementById('briefing-list');
+  function el(t, c, txt){ var e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; }
+  function card(title){ var c=el('div','card'); c.appendChild(el('div','b-h',title)); box.appendChild(c); return c; }
+  function pill(cls, txt){ return el('span','b-pill '+cls, txt); }
+  function row(label, sub, pillCls, pillTxt){
+    var r=el('div','b-row'); var t=el('div','b-txt'); t.appendChild(el('div',null,label)); if(sub) t.appendChild(el('div','b-sub',sub));
+    r.appendChild(t); r.appendChild(pill(pillCls,pillTxt)); return r;
+  }
+
+  var now = new Date(), h = now.getHours();
+  var greet = h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+  box.appendChild(el('div','b-hi', greet + ', Elijah'));
+  box.appendChild(el('div','b-date', now.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})));
+
+  /* 1. Today's list (saved on this phone, one list per day) */
+  var key = 'mh-brief-' + now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate();
+  var state; try{ state = JSON.parse(localStorage.getItem(key)||'null'); }catch(e){}
+  if(!state) state = { done:{}, extra:[] };
+  function save(){ try{ localStorage.setItem(key, JSON.stringify(state)); }catch(e){} }
+  var DEFAULTS = [
+    ['k1','Set OWNER_KEY in Netlify, redeploy, open the unlock link once'],
+    ['k2','Send one real test gift by email (20-sec video + verse + note)'],
+    ['k3','Finish the Twilio test, then tell Claude to unlock SMS Text'],
+    ['k4','Post the first Tapsag Short (Content tab, #6 screen record)'],
+    ['k5','Tapsag soft launch (mid-afternoon)']
+  ];
+  var calls = prospects.filter(function(p){ return p.phone && p.status==='demo'; })
+    .sort(function(a,b){ return (b.emergency?1:0)-(a.emergency?1:0); }).slice(0,3);
+  var c1 = card("Do first today");
+  var listEl = el('div');
+  function drawList(){
+    listEl.innerHTML='';
+    var items = DEFAULTS.concat(state.extra.map(function(t,i){ return ['x'+i,t]; }));
+    items.forEach(function(it){
+      var r = el('div','b-row'+(state.done[it[0]]?' done':''));
+      var b = el('button','b-chk', state.done[it[0]]?'✓':''); b.setAttribute('aria-label','Mark done');
+      b.onclick=function(){ state.done[it[0]]=!state.done[it[0]]; save(); drawList(); };
+      r.appendChild(b); r.appendChild(el('div','b-txt',it[1])); listEl.appendChild(r);
+    });
+  }
+  drawList(); c1.appendChild(listEl);
+  var add = el('div','b-add'); var inp = el('input'); inp.placeholder='Add something for today'; inp.maxLength=120;
+  var ab = el('button',null,'Add');
+  ab.onclick=function(){ var v=inp.value.trim(); if(!v) return; state.extra.push(v); inp.value=''; save(); drawList(); };
+  add.appendChild(inp); add.appendChild(ab); c1.appendChild(add);
+
+  /* 2. Calls to make (from the pipeline records) */
+  var c2 = card("Calls to make");
+  if(!calls.length){ c2.appendChild(el('div','b-sub','No demo-ready prospects with a phone number.')); }
+  calls.forEach(function(p){
+    var r = el('div','b-row'); var t=el('div','b-txt'); t.appendChild(el('div',null,p.name)); t.appendChild(el('div','b-sub',p.niche+(p.emergency?' · hail emergency':'')));
+    var a = el('a','b-call','📞'); a.href='tel:'+p.phone; a.setAttribute('aria-label','Call '+p.name);
+    r.appendChild(t); r.appendChild(a); c2.appendChild(r);
+  });
+  var seeAll = el('a','b-go','See full pipeline'); seeAll.href='#'; seeAll.onclick=function(e){ e.preventDefault(); showView('pipeline'); }; c2.appendChild(seeAll);
+
+  /* 3. Pipeline numbers (computed, not typed) */
+  var c3 = card("Pipeline");
+  var g = el('div','b-grid');
+  [[prospects.length,'Prospects'],[prospects.filter(function(p){return p.status==='demo';}).length,'Demo ready'],[prospects.filter(function(p){return p.emergency;}).length,'Hail'],[warmLeads.length,'Warm']].forEach(function(x){
+    var s=el('div','stat'); s.appendChild(el('div','n',String(x[0]))); s.appendChild(el('div','l',x[1])); g.appendChild(s);
+  });
+  c3.appendChild(g);
+  c3.appendChild(el('div','b-sub','Contacted: 0 recorded. Replies and deals are not tracked here yet.'));
+
+  /* 4. Tapsag status. Hand-set and dated; only the site check is live. */
+  var c4 = card("Tapsag.shop");
+  var siteRow = row('Website','Checking…','b-off','…'); c4.appendChild(siteRow);
+  c4.appendChild(row('Email delivery','Confirmed working (real test gift sent)','b-ok','Working'));
+  c4.appendChild(row('SMS Text','Locked as Coming Soon on Nov 24 while Twilio is finished','b-wait','Coming Soon'));
+  c4.appendChild(row('Stripe checkout','Not tested end to end','b-wait','Untested'));
+  c4.appendChild(row('Background lock','Needs OWNER_KEY set in Netlify','b-wait','Set key'));
+  fetch('https://tapsag.shop',{mode:'no-cors',cache:'no-store'}).then(function(){
+    siteRow.replaceWith(row('Website','Reachable just now','b-ok','Live'));
+  }).catch(function(){
+    siteRow.replaceWith(row('Website','Could not reach it from this phone','b-bad','Check'));
+  });
+  var toC = el('a','b-go','Open Shorts and posts'); toC.href='#'; toC.onclick=function(e){ e.preventDefault(); showView('content'); }; c4.appendChild(toC);
+
+  /* 5. Not connected yet (shown honestly, no made-up numbers) */
+  var c5 = card("Not connected yet");
+  c5.appendChild(row('Fiverr / Upwork / LinkedIn requests','No feed connected','b-off','Empty'));
+  c5.appendChild(row('Google Maps business discovery','No feed connected','b-off','Empty'));
+  c5.appendChild(row('Revenue and customers','None recorded','b-off','Empty'));
+
+  box.appendChild(el('div','b-note','Real data only. Pipeline numbers come from this app’s records. Tapsag statuses are set by hand and change when you tell Claude something changed. Your checklist is saved on this phone, one list per day.'));
+})();
+showView('briefing');
 
 /* ===== Content tab: Tapsag Shorts + posts (copy / paste) ===== */
 (function(){
