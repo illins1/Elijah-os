@@ -306,7 +306,7 @@ renderWarm();
   /* 4. Tapsag status. Hand-set and dated; only the site check is live. */
   var c4 = card("Tapsag.shop");
   var siteRow = row('Website','Checking…','b-off','…'); c4.appendChild(siteRow);
-  c4.appendChild(row('Email delivery','Confirmed working (real test gift sent)','b-ok','Working'));
+  c4.appendChild(row('Email delivery','Verify tapsag.shop domain in Resend before customer delivery','b-wait','Verify Resend'));
   c4.appendChild(row('SMS Text','Locked as Coming Soon on Nov 24 while Twilio is finished','b-wait','Coming Soon'));
   c4.appendChild(row('Stripe checkout','Not tested end to end','b-wait','Untested'));
   c4.appendChild(row('Background lock','Needs OWNER_KEY set in Netlify','b-wait','Set key'));
