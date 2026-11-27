@@ -1,0 +1,30 @@
+{
+  "updated": "2026-11-27T14:16:00-07:00",
+  "priority": "Verify Resend DNS for tapsag.shop before launch",
+  "cards": [
+    {
+      "title": "Resend DNS",
+      "status": "todo",
+      "detail": "Verify tapsag.shop in Resend and confirm the required DNS records; customer gift emails must reach real recipients.",
+      "who": "Elijah"
+    },
+    {
+      "title": "Test gift delivery",
+      "status": "todo",
+      "detail": "After domain verification, send a real test gift: photo, 20-second video, Scripture/note, review screen, and recipient link.",
+      "who": "Elijah"
+    },
+    {
+      "title": "Brand kit",
+      "status": "done",
+      "detail": "Avatar, banner, bios, and 8 Shorts are ready.",
+      "who": "Claude"
+    },
+    {
+      "title": "SMS via Twilio",
+      "status": "blocked",
+      "detail": "Keep SMS labeled Coming Soon until Twilio is verified and the end-to-end test passes.",
+      "who": "Elijah"
+    }
+  ]
+}
