@@ -239,6 +239,7 @@ renderWarm();
 (function(){
   var box = document.getElementById('briefing-list');
   function el(t, c, txt){ var e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; }
+  var sharedBox = el('div'); sharedBox.id = 'shared-briefing'; box.appendChild(sharedBox);
   function card(title){ var c=el('div','card'); c.appendChild(el('div','b-h',title)); box.appendChild(c); return c; }
   function pill(cls, txt){ return el('span','b-pill '+cls, txt); }
   function row(label, sub, pillCls, pillTxt){
@@ -326,6 +327,57 @@ renderWarm();
 
   box.appendChild(el('div','b-note','Real data only. Pipeline numbers come from this app’s records. Tapsag statuses are set by hand and change when you tell Claude something changed. Your checklist is saved on this phone, one list per day.'));
 })();
+
+/* ===== Shared Briefing feed: GitHub is the source of truth; phone cache is fallback. ===== */
+(function(){
+  var target = document.getElementById('shared-briefing');
+  var endpoint = new URL('./briefing.json', window.location.href).toString();
+  var cacheKey = 'mh-shared-briefing-v1';
+  function node(tag, cls, value){ var n=document.createElement(tag); if(cls) n.className=cls; if(value!=null) n.textContent=value; return n; }
+  function render(data){
+    target.innerHTML = '';
+    var head = node('div','b-h','Shared team briefing');
+    target.appendChild(head);
+    if(data.priority) target.appendChild(node('div','b-sub','Priority: '+data.priority));
+    var stamp = data.updated ? new Date(data.updated) : null;
+    target.appendChild(node('div','b-date','Updated '+(stamp && !isNaN(stamp.getTime()) ? stamp.toLocaleString() : 'time unavailable')));
+    (Array.isArray(data.cards) ? data.cards : []).forEach(function(item){
+      var c=node('div','card');
+      var top=node('div','card-top');
+      top.appendChild(node('div','biz-name',item.title || 'Untitled'));
+      var status=(item.status || 'todo').toLowerCase();
+      var cls=status==='done'?'b-ok':status==='doing'?'b-wait':status==='blocked'?'b-bad':'b-off';
+      top.appendChild(node('span','b-pill '+cls,status));
+      c.appendChild(top);
+      if(item.detail) c.appendChild(node('div','niche',item.detail));
+      var meta=[item.who ? 'Who: '+item.who : '', item.updated ? 'Updated: '+new Date(item.updated).toLocaleString() : ''].filter(Boolean).join(' · ');
+      if(meta) c.appendChild(node('div','b-sub',meta));
+      target.appendChild(c);
+    });
+    if(!Array.isArray(data.cards) || !data.cards.length) target.appendChild(node('div','b-sub','No shared cards yet.'));
+  }
+  function fallback(){
+    try{ var saved=JSON.parse(localStorage.getItem(cacheKey)||'null'); if(saved) { render(saved); return true; } }catch(e){}
+    return false;
+  }
+  function refresh(){
+    return fetch(endpoint,{cache:'no-store'}).then(function(response){
+      if(!response.ok) throw new Error('Briefing feed unavailable: '+response.status);
+      return response.json();
+    }).then(function(data){
+      if(!data || !Array.isArray(data.cards)) throw new Error('Invalid briefing feed');
+      try{ localStorage.setItem(cacheKey,JSON.stringify(data)); }catch(e){}
+      render(data);
+    }).catch(function(){
+      if(!fallback()) target.textContent='Shared briefing is unavailable; the phone has no saved copy yet.';
+    });
+  }
+  refresh();
+  window.setInterval(refresh,5*60*1000);
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') refresh(); });
+  window.addEventListener('pageshow',refresh);
+})();
+
 showView('briefing');
 
 /* ===== Content tab: Tapsag Shorts + posts (copy / paste) ===== */
@@ -395,5 +447,9 @@ showView('briefing');
 })();
 </script>
 
+
+<script>
+if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ navigator.serviceWorker.register('./sw.js').catch(function(err){ console.warn('Service worker registration failed', err); }); }); }
+</script>
 </body>
 </html>
